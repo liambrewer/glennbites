@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use \Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Employee extends Authenticatable
 {
@@ -21,5 +22,10 @@ class Employee extends Authenticatable
     public function getAuthPassword(): string
     {
         return $this->pin;
+    }
+
+    public function stockMovements(): MorphMany
+    {
+        return $this->morphMany(StockMovement::class, 'actor');
     }
 }

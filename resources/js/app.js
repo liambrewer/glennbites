@@ -1,1 +1,38 @@
-import './bootstrap';
+import './bootstrap'
+
+import dayjs from 'dayjs'
+
+import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
+
+Alpine.data('duration', (startedAt) => ({
+    timer: null,
+    startedAt: dayjs(startedAt),
+    timeElapsed: "",
+
+    init() {
+        this.syncTime();
+
+        this.timer = setInterval(() => {
+            this.syncTime();
+        }, 10);
+    },
+
+    syncTime() {
+        this.timeElapsed = formatTime(dayjs().diff(this.startedAt, 'seconds'));
+    },
+
+    destroy() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+    },
+}))
+
+function formatTime(seconds) {
+    const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+    const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${h}:${m}:${s}`;
+}
+
+Livewire.start();
