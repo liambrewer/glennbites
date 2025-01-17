@@ -19,11 +19,13 @@
         </x-pos.dashboard-card>
         <x-pos.dashboard-card class="row-span-2" title="Terminal State" icon="heroicon-c-computer-desktop">
             <div class="grow">
-                <div class="font-semibold text-gray-800">Liam Brewer</div>
-                <div class="text-sm text-gray-600">gb0001</div>
+                <div class="font-semibold text-gray-800">{{ $user->name }}</div>
+                <div class="text-sm text-gray-600">{{ $user->employee_number }}</div>
             </div>
 
-            <form action="#" method="post">
+            <form action="{{ route('pos.auth.logout') }}" method="post">
+                @csrf
+
                 <button type="submit">Log Out</button>
             </form>
         </x-pos.dashboard-card>

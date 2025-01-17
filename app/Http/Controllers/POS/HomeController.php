@@ -13,6 +13,8 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return view('pos.dashboard');
+        $user = auth('employee')->user();
+
+        return view('pos.dashboard', compact('user'));
     }
 }
