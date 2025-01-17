@@ -14,6 +14,11 @@ use Inertia\Inertia;
 
 class AuthController extends Controller
 {
+    public function showLoginForm()
+    {
+        return view('pos.auth.login');
+    }
+
     public function login(LoginRequest $request)
     {
         $validated = $request->validated();
@@ -21,18 +26,24 @@ class AuthController extends Controller
         $employee = Employee::where('employee_number', $validated['employee_number'])->first();
 
         if (!$employee || !Hash::check($validated['pin'], $employee->pin)) {
-            return response()->json(['message' => 'The provided credentials do not match our records.'], 401);
+            return back()->withErrors(['employee_number' => 'The provided credentials do not match our records.'])->onlyInput('employee_number');
         }
 
-        $token = $employee->createToken('pos-token')->plainTextToken;
+        Auth::guard('employee')->login($employee);
 
-        return response()->json(['message' => 'POS Token issued.', 'token' => $token, 'user' => EmployeeResource::make($employee)]);
+        $request->session()->regenerate();
+
+        return redirect()->intended(route('pos.home'));
     }
 
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
+        Auth::guard('employee')->logout();
 
-        return response()->json(['message' => 'Tokens revoked.']);
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect()->route('pos.auth.show-login-form');
     }
 }

@@ -23,7 +23,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'employee_number' => 'required|exists:employees,employee_number',
+            'employee_number' => 'required',
             'pin' => 'required',
         ];
     }
