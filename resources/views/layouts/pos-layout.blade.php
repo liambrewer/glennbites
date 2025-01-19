@@ -7,12 +7,12 @@
 </head>
 <body class="font-onest antialiased bg-slate-100">
 <aside class="fixed inset-y-0 left-0 flex flex-col gap-5 w-64 p-5 border-r bg-slate-50">
-    <h1 class="text-lg font-semibold">glennbites</h1>
+    <h1 class="text-lg font-semibold">glennbites POS</h1>
 
     <ul class="flex flex-col gap-1 grow">
         @foreach ($navLinks as $navLink)
             <li class="contents">
-                <a class="{{ 'group flex items-center h-12 px-2.5 gap-2.5 rounded-lg border ' . ($navLink->active ? 'bg-blue-50 border-blue-200' : 'bg-white') }}" href="{{ $navLink->href }}">
+                <a class="{{ 'group flex items-center h-12 px-2.5 gap-2.5 rounded-lg border ' . ($navLink->active ? 'bg-blue-50 border-blue-200' : 'bg-white') }}" href="{{ $navLink->href }}" wire:navigate>
                     <x-dynamic-component :component="$navLink->icon" class="{{ 'size-4 ' . ($navLink->active ? 'text-blue-600' : 'text-gray-600') }}" />
 
                     <span class="{{ 'font-semibold text-sm ' . ($navLink->active ? 'text-blue-800' : 'text-gray-800') }}">{{ $navLink->label }}</span>
