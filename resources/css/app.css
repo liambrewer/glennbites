@@ -3,3 +3,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+[x-cloak] { display: none !important; }
+
+@layer components {
+    /*
+        Text Input Styles
+     */
+    .text-input {
+        @apply px-3 py-2.5 text-sm border rounded focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 duration-150 read-only:text-gray-400 read-only:bg-gray-100
+    }
+
+    .text-input-error {
+        @apply border-red-500 bg-red-50 placeholder-red-500;
+    }
+
+    /*
+        Label Styles
+     */
+    .label {
+        @apply text-sm font-semibold;
+    }
+
+    .label-required {
+        @apply after:content-['*'] after:-ms-0.5 after:text-red-500;
+    }
+}

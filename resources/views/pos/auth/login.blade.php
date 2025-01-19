@@ -1,12 +1,16 @@
-<x-pos-layout>
-    <form action="{{ route('pos.auth.login') }}" method="post">
-        @csrf
+<x-base-layout>
+    <div class="fixed inset-0 flex flex-col gap-10 items-center justify-center">
+        <h1 class="text-2xl font-semibold">Employee Login</h1>
 
-        <input type="text" name="employee_number" value="{{ old('employee_number') }}" />
-        @error('employee_number') <p class="text-sm text-red-500 font-semibold">{{ $message }}</p> @enderror
-        <input type="password" name="pin" value="{{ old('pin') }}" />
-        @error('pin') <p class="text-sm text-red-500 font-semibold">{{ $message }}</p> @enderror
+        <form class="flex flex-col gap-5 max-w-lg w-full" action="{{ route('pos.auth.login') }}" method="post">
+            @csrf
 
-        <button type="submit">Log in</button>
-    </form>
-</x-pos-layout>
+            <div class="w-full space-y-2.5">
+                <x-ui.input.text label="Employee Number" name="employee_number" value="{{ old('employee_number') }}" required />
+                <x-ui.input.text label="PIN" type="password" name="pin" required />
+            </div>
+
+            <x-ui.button.primary type="submit">Log in</x-ui.button.primary>
+        </form>
+    </div>
+</x-base-layout>

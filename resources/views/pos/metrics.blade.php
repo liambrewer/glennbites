@@ -1,3 +1,3 @@
 <x-pos-layout>
-    <h1>Home</h1>
+    <h1>Metrics</h1>
 </x-pos-layout>

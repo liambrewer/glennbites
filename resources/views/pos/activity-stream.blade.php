@@ -1,3 +1,3 @@
 <x-pos-layout>
-    <h1>Home</h1>
+    <h1>Activity Stream</h1>
 </x-pos-layout>

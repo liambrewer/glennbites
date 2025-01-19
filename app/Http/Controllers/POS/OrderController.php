@@ -13,7 +13,7 @@ class OrderController extends Controller
     {
         $orders = Order::with('user', 'items')->get();
 
-        return response()->json(OrderResource::collection($orders));
+        return view('pos.orders.index', compact('orders'));
     }
 
     public function show(Order $order)
