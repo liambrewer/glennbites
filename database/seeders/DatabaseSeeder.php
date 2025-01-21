@@ -62,5 +62,19 @@ class DatabaseSeeder extends Seeder
                 'quantity' => 2,
             ]
         ]);
+
+        $this->orderService->createOrder($user, [
+            [
+                'product_id' => 2,
+                'quantity' => 1,
+            ]
+        ]);
+
+        $this->orderService->createOrder($user, [
+            [
+                'product_id' => 1,
+                'quantity' => 3,
+            ]
+        ]);
     }
 }

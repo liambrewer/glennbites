@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\POS;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,6 +14,8 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return view('pos.home');
+        $currentOrders = Order::current()->get();
+
+        return view('pos.home', compact('currentOrders'));
     }
 }

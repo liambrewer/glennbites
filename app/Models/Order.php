@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\OrderStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -17,6 +18,7 @@ class Order extends Model
 
     protected $casts = [
         'status' => OrderStatus::class,
+        'status_changed_at' => 'datetime',
     ];
 
     /**
@@ -59,6 +61,17 @@ class Order extends Model
         return $this->status === OrderStatus::PENDING;
     }
 
+    public function getReadableStatusAttribute(): string
+    {
+        return match ($this->status) {
+            OrderStatus::PENDING => 'Pending',
+            OrderStatus::RESERVED => 'Reserved',
+            OrderStatus::COMPLETED => 'Completed',
+            OrderStatus::CANCELLED => 'Cancelled',
+            OrderStatus::SHORTED => 'Shorted',
+        };
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -67,5 +80,10 @@ class Order extends Model
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function scopeCurrent(Builder $query): Builder
+    {
+        return $query->whereIn('status', [OrderStatus::PENDING, OrderStatus::RESERVED]);
     }
 }

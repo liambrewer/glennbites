@@ -6,7 +6,7 @@ use App\Models\Order;
 use App\Services\OrderService;
 use LivewireUI\Modal\ModalComponent;
 
-class CancelOrderModal extends ModalComponent
+class ReserveOrderModal extends ModalComponent
 {
     private OrderService $orderService;
 
@@ -17,19 +17,14 @@ class CancelOrderModal extends ModalComponent
         $this->orderService = $orderService;
     }
 
-    public function short()
+    public function reserve()
     {
-        $this->orderService->shortOrder($this->order->id, auth('employee')->user());
-    }
-
-    public function cancel()
-    {
-        $this->orderService->cancelOrder($this->order->id, auth('employee')->user());
+        $this->orderService->reserveOrder($this->order->id, auth('employee')->user());
     }
 
     public function render()
     {
-        return view('livewire.pos.cancel-order-modal');
+        return view('livewire.pos.reserve-order-modal');
     }
 
     public static function modalMaxWidth(): string

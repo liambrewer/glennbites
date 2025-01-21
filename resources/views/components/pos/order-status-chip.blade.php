@@ -8,8 +8,24 @@ $chipClasses = 'flex items-center gap-1.5 text-white text-sm font-semibold px-2.
 
 switch ($status) {
     case (OrderStatus::PENDING):
-        $icon = 'heroicon-c-clock';
+            $icon = 'heroicon-c-clock';
+            $chipClasses .= ' bg-yellow-500';
+            break;
+    case (OrderStatus::RESERVED):
+        $icon = 'heroicon-c-arrow-down-tray';
         $chipClasses .= ' bg-blue-500';
+        break;
+    case (OrderStatus::COMPLETED):
+        $icon = 'heroicon-c-check';
+        $chipClasses .= ' bg-green-500';
+        break;
+    case (OrderStatus::CANCELLED):
+        $icon = 'heroicon-c-exclamation-triangle';
+        $chipClasses .= ' bg-red-500';
+        break;
+    case (OrderStatus::SHORTED):
+        $icon = 'heroicon-c-x-circle';
+        $chipClasses .= ' bg-amber-500';
         break;
 }
 @endphp

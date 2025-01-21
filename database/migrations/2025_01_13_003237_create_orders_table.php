@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->restrictOnDelete();
             $table->enum('status', ['pending', 'reserved', 'completed', 'cancelled', 'shorted'])->default('pending');
             $table->decimal('total', 15, 2);
+            $table->timestamp('status_changed_at')->default(now());
             $table->timestamps();
         });
     }

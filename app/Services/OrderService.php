@@ -9,6 +9,8 @@ use App\Exceptions\NotEnoughStockException;
 use App\Exceptions\OrderCancellationException;
 use App\Exceptions\OrderCompletionException;
 use App\Exceptions\OrderCreationException;
+use App\Exceptions\OrderReservationException;
+use App\Exceptions\OrderShortException;
 use App\Exceptions\OutOfStockException;
 use App\Models\Employee;
 use App\Models\Order;
@@ -71,13 +73,30 @@ class OrderService
         }
     }
 
+    public function reserveOrder(int $orderId, Employee $employee): Order
+    {
+        return DB::transaction(function () use ($orderId, $employee) {
+            $order = Order::findOrFail($orderId);
+
+            if (!$order->reservable) {
+                throw new OrderReservationException();
+            }
+
+            $order->status = OrderStatus::RESERVED;
+            $order->status_changed_at = now();
+            $order->save();
+
+            return $order;
+        });
+    }
+
     public function completeOrder(int $orderId, Employee $employee): Order
     {
         return DB::transaction(function () use ($orderId, $employee) {
             $order = Order::findOrFail($orderId);
 
             if (!$order->completable) {
-                throw new OrderCompletionException("Order must be reserved before it can be marked as completed.");
+                throw new OrderCompletionException();
             }
 
             $order->load('items');
@@ -87,6 +106,7 @@ class OrderService
             }
 
             $order->status = OrderStatus::COMPLETED;
+            $order->status_changed_at = now();
             $order->save();
 
             return $order;
@@ -109,6 +129,7 @@ class OrderService
             }
 
             $order->status = OrderStatus::CANCELLED;
+            $order->status_changed_at = now();
             $order->save();
 
             return $order;
@@ -121,7 +142,7 @@ class OrderService
             $order = Order::findOrFail($orderId);
 
             if (!$order->shortable) {
-                throw ValidationException::withMessages(['order' => 'Order cannot be shorted.']);
+                throw new OrderShortException();
             }
 
             $order->load('items');
@@ -131,6 +152,7 @@ class OrderService
             }
 
             $order->status = OrderStatus::SHORTED;
+            $order->status_changed_at = now();
             $order->save();
 
             return $order;
