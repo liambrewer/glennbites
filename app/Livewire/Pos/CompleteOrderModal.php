@@ -2,16 +2,17 @@
 
 namespace App\Livewire\Pos;
 
-use App\Exceptions\OrderCancellationException;
+use App\Exceptions\OrderCompletionException;
 use App\Exceptions\OrderNotFoundException;
 use App\Exceptions\OrderReservationException;
 use App\Models\Order;
 use App\Services\OrderService;
 use Illuminate\View\View;
+use Livewire\Component;
 use LivewireUI\Modal\ModalComponent;
 use Masmerise\Toaster\Toastable;
 
-class ReserveOrderModal extends ModalComponent
+class CompleteOrderModal extends ModalComponent
 {
     use Toastable;
 
@@ -24,16 +25,16 @@ class ReserveOrderModal extends ModalComponent
         $this->orderService = $orderService;
     }
 
-    public function reserve(): void
+    public function complete(): void
     {
-        $this->authorizeForUser(auth('employee')->user(), 'reserve', $this->order);
+        $this->authorizeForUser(auth('employee')->user(), 'complete', $this->order);
 
         try {
-            $this->orderService->reserveOrder($this->order->id, auth('employee')->user());
+            $this->orderService->completeOrder($this->order->id, auth('employee')->user());
 
-            $this->success("Order reserved.");
-        } catch (OrderNotFoundException|OrderReservationException $e) {
-            $this->error("Failed to reserve order: " . $e->getMessage());
+            $this->success("Order completed.");
+        } catch (OrderNotFoundException|OrderCompletionException $e) {
+            $this->error("Failed to complete order: " . $e->getMessage());
         } finally {
             $this->closeModal();
         }
@@ -43,6 +44,6 @@ class ReserveOrderModal extends ModalComponent
     {
         $this->authorizeForUser(auth('employee')->user(), 'view', $this->order);
 
-        return view('livewire.pos.reserve-order-modal');
+        return view('livewire.pos.complete-order-modal');
     }
 }

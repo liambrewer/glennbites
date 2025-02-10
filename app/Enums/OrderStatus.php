@@ -7,6 +7,6 @@ enum OrderStatus: string
     case PENDING = 'pending';
     case RESERVED = 'reserved';
     case COMPLETED = 'completed';
-    case CANCELLED = 'cancelled';
+    case CANCELED = 'canceled';
     case SHORTED = 'shorted';
 }

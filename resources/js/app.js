@@ -1,12 +1,18 @@
 import './bootstrap'
+import '../../vendor/masmerise/livewire-toaster/resources/js';
 
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
 
 Alpine.data('duration', (startedAt) => ({
     timer: null,
-    startedAt: dayjs(startedAt),
+    startedAt: dayjs.tz(startedAt, "America/Chicago"),
     timeElapsed: "",
 
     init() {
@@ -18,7 +24,7 @@ Alpine.data('duration', (startedAt) => ({
     },
 
     syncTime() {
-        this.timeElapsed = formatTime(dayjs().diff(this.startedAt, 'seconds'));
+        this.timeElapsed = formatTime(dayjs().tz("America/Chicago").diff(this.startedAt, 'seconds'));
     },
 
     destroy() {

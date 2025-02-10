@@ -12,7 +12,7 @@ use App\Enums\OrderStatus;
                     OrderStatus::PENDING => ['icon' => 'heroicon-m-clock', 'classes' => 'bg-yellow-500'],
                     OrderStatus::RESERVED => ['icon' => 'heroicon-m-arrow-down-tray', 'classes' => 'bg-blue-500'],
                     OrderStatus::COMPLETED => ['icon' => 'heroicon-m-check', 'classes' => 'bg-green-500'],
-                    OrderStatus::CANCELLED => ['icon' => 'heroicon-m-exclamation-triangle', 'classes' => 'bg-red-500'],
+                    OrderStatus::CANCELED => ['icon' => 'heroicon-m-exclamation-triangle', 'classes' => 'bg-red-500'],
                     OrderStatus::SHORTED => ['icon' => 'heroicon-m-x-circle', 'classes' => 'bg-amber-500'],
                 }
             @endphp
@@ -53,23 +53,39 @@ use App\Enums\OrderStatus;
 
                 <div class="space-y-2.5">
                     <x-ui.button.primary class="w-full" x-data="orderPrinter('{{ $order->id }}')" x-bind:disabled="printing" @click="printPdf">
-                        <template x-if="!printing"><span><x-ui.button.icon icon="heroicon-m-printer" /></span></template>
-                        <template x-if="printing"><span><x-ui.button.icon icon="heroicon-m-arrow-path" class="animate-spin" /></span></template>
+                        <x-slot name="left">
+                            <template x-if="!printing"><span><x-ui.button.icon icon="heroicon-m-printer" /></span></template>
+                            <template x-if="printing"><span><x-ui.button.icon icon="heroicon-m-arrow-path" class="animate-spin" /></span></template>
+                        </x-slot>
 
                         <template x-if="!printing"><span>Print Label</span></template>
                         <template x-if="printing"><span>Printing...</span></template>
                     </x-ui.button.primary>
                     <div class="grid grid-cols-2 gap-2.5">
                         <x-ui.button.danger wire:click="$dispatch('openModal', { component: 'pos.cancel-order-modal', arguments: { order: {{ $order->id }} } })">
-                            <x-ui.button.icon icon="heroicon-m-x-mark" />
+                            <x-slot name="left">
+                                <x-ui.button.icon icon="heroicon-m-x-mark" />
+                            </x-slot>
 
                             Cancel
                         </x-ui.button.danger>
-                        <x-ui.button.success wire:click="$dispatch('openModal', { component: 'pos.reserve-order-modal', arguments: { order: {{ $order->id }} } })">
-                            <x-ui.button.icon icon="heroicon-m-check" />
+                        @if($order->can_reserve)
+                            <x-ui.button.success wire:click="$dispatch('openModal', { component: 'pos.reserve-order-modal', arguments: { order: {{ $order->id }} } })">
+                                <x-slot name="left">
+                                    <x-ui.button.icon icon="heroicon-m-check" />
+                                </x-slot>
 
-                            Reserve
-                        </x-ui.button.success>
+                                Reserve
+                            </x-ui.button.success>
+                        @elseif($order->can_complete)
+                            <x-ui.button.success wire:click="$dispatch('openModal', { component: 'pos.complete-order-modal', arguments: { order: {{ $order->id }} } })">
+                                <x-slot name="left">
+                                    <x-ui.button.icon icon="heroicon-m-check" />
+                                </x-slot>
+
+                                Complete
+                            </x-ui.button.success>
+                        @endif
                     </div>
                 </div>
             </div>

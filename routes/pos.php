@@ -10,7 +10,7 @@ use Spatie\LaravelPdf\Facades\Pdf;
 Route::domain('pos.' . parse_url(config('app.url'))['host'])->name('pos.')->group(function () {
     Route::name('auth.')->prefix('/auth')->controller(POS\AuthController::class)->middleware('guest:employee')->group(function () {
         Route::get('/login', 'showLoginForm')->name('show-login-form');
-        Route::post('/login', 'login')->name('login');
+        Route::post('/login', 'login')->name('login')->middleware('throttle:10,1');
         Route::post('/logout', 'logout')->name('logout')->withoutMiddleware('guest:employee');
     });
 
@@ -23,10 +23,7 @@ Route::domain('pos.' . parse_url(config('app.url'))['host'])->name('pos.')->grou
             Route::get('/{order}/pickup-label.pdf', function (Order $order) {
                 return Pdf::view('labels.pickup', compact('order'))
                     ->paperSize(4, 2.25, 'in')
-                    ->orientation(Orientation::Landscape)
-                    ->withBrowsershot(function (Browsershot $browsershot) {
-
-                    });
+                    ->orientation(Orientation::Landscape);
             });
         });
 

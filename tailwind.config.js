@@ -5,6 +5,7 @@ export default {
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './vendor/wire-elements/modal/resources/views/*.blade.php',
+        './vendor/masmerise/livewire-toaster/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/**/*.blade.php',
         './resources/**/*.js',

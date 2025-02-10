@@ -14,8 +14,10 @@
         "chillerlan/php-qrcode": "^5.0",
         "gehrisandro/tailwind-merge-laravel": "^1.2",
         "laravel/framework": "^11.31",
+        "laravel/reverb": "^1.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
+        "masmerise/livewire-toaster": "^2.6",
         "spatie/laravel-pdf": "^1.5",
         "wire-elements/modal": "^2.0"
     },

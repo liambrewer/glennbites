@@ -26,7 +26,7 @@ class Order extends Model
      *
      * @return bool
      */
-    public function getReservableAttribute(): bool
+    public function getCanReserveAttribute(): bool
     {
         return $this->status === OrderStatus::PENDING;
     }
@@ -36,7 +36,7 @@ class Order extends Model
      *
      * @return bool
      */
-    public function getCompletableAttribute(): bool
+    public function getCanCompleteAttribute(): bool
     {
         return $this->status === OrderStatus::RESERVED;
     }
@@ -46,7 +46,7 @@ class Order extends Model
      *
      * @return bool
      */
-    public function getCancellableAttribute(): bool
+    public function getCanCancelAttribute(): bool
     {
         return in_array($this->status, [OrderStatus::PENDING, OrderStatus::RESERVED]);
     }
@@ -56,7 +56,7 @@ class Order extends Model
      *
      * @return bool
      */
-    public function getShortableAttribute(): bool
+    public function getCanShortAttribute(): bool
     {
         return $this->status === OrderStatus::PENDING;
     }
@@ -67,7 +67,7 @@ class Order extends Model
             OrderStatus::PENDING => 'Pending',
             OrderStatus::RESERVED => 'Reserved',
             OrderStatus::COMPLETED => 'Completed',
-            OrderStatus::CANCELLED => 'Cancelled',
+            OrderStatus::CANCELED => 'Canceled',
             OrderStatus::SHORTED => 'Shorted',
         };
     }

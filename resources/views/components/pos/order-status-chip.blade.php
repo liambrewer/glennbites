@@ -19,7 +19,7 @@ switch ($status) {
         $icon = 'heroicon-c-check';
         $chipClasses .= ' bg-green-500';
         break;
-    case (OrderStatus::CANCELLED):
+    case (OrderStatus::CANCELED):
         $icon = 'heroicon-c-exclamation-triangle';
         $chipClasses .= ' bg-red-500';
         break;
