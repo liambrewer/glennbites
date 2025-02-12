@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(Product::class)->constrained()->restrictOnDelete();
             $table->integer('quantity');
             $table->decimal('price', 15, 2);
+            $table->timestamp('fulfilled_at')->nullable();
             $table->timestamps();
 
             $table->unique(['order_id', 'product_id']);

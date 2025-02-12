@@ -8,7 +8,7 @@ use Spatie\LaravelPdf\Facades\Pdf;
 
 Route::domain(parse_url(config('app.url'))['host'])->group(function () {
     Route::get('/', function () {
-        return "Home";
+        return view('storefront.home');
     })->name('home');
 
     Route::get('/orders/{order}/pickup-label', function (Order $order) {

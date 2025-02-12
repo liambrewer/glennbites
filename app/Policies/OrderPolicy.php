@@ -31,6 +31,11 @@ class OrderPolicy
         return $actor instanceof User;
     }
 
+    public function update(User|Employee $actor): bool
+    {
+        return $actor instanceof Employee;
+    }
+
     public function reserve(User|Employee $actor): bool
     {
         return $actor instanceof Employee;
