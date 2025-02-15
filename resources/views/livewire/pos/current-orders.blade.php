@@ -66,7 +66,7 @@ use App\Enums\OrderStatus;
                 <span class="text-sm font-semibold">No reserved orders.</span>
             </div>
         @else
-            <ul class="grid grid-cols-3 gap-4">
+            <ul class="grid grid-cols-3 gap-4 place-items">
                 @foreach ($reservedOrders as $order)
                     <livewire:pos.reserved-order-card wire:key="{{ $order->wire_key }}" :$order />
                 @endforeach

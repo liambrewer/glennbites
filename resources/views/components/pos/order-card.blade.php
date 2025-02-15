@@ -1,6 +1,6 @@
 @use(App\Enums\OrderStatus)
 
-<li class="flex flex-col h-fit">
+<li class="flex flex-col">
     @php
         $bannerStyle = match ($order->status) {
             OrderStatus::PENDING => ['icon' => 'heroicon-m-clock', 'classes' => 'bg-yellow-500'],

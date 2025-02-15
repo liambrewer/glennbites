@@ -4,6 +4,9 @@
             <li wire:key="{{ $item->id }}">
                 <button wire:click="toggleFulfilled({{ $item->id }})" wire:loading.attr="disabled" wire:target="toggleFulfilled({{ $item->id }})" class="flex px-2.5 py-3 gap-3 min-h-12 w-full text-left hover:bg-gray-50 duration-150">
                     <div class="shrink-0 text-gray-600">{{ $item->quantity }}x</div>
+                    @if ($item->product->image_url)
+                        <img class="size-6 border object-cover rounded" src="{{ $item->product->image_url }}" alt="Product Image">
+                    @endif
                     <div class="grow text-gray-800 font-semibold @if ($item->fulfilled) line-through @endif">{{ $item->product->name }}</div>
                     <div class="shrink-0">
                         <div class="flex items-center justify-center size-6 text-green-500">
