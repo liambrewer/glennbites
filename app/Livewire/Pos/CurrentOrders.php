@@ -5,12 +5,23 @@ namespace App\Livewire\Pos;
 use App\Events\OrderItemChanged;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class CurrentOrders extends Component
 {
-    public $orders;
+    const PENDING_COLLAPSED_KEY = 'current-orders.pending-collapsed';
+    const RESERVED_COLLAPSED_KEY = 'current-orders.reserved-collapsed';
+
+    /** @var Order[] */
+    public $pendingOrders = [];
+
+    /** @var Order[] */
+    public $reservedOrders = [];
+
+    public bool $pendingCollapsed;
+    public bool $reservedCollapsed;
 
     public function getListeners(): array
     {
@@ -27,25 +38,29 @@ class CurrentOrders extends Component
     public function mount(): void
     {
         $this->fetchOrders();
+
+        $this->pendingCollapsed = Session::get($this::PENDING_COLLAPSED_KEY, false);
+        $this->reservedCollapsed = Session::get($this::RESERVED_COLLAPSED_KEY, false);
     }
 
     public function fetchOrders(): void
     {
-        $this->orders = Order::current()->with('user', 'items', 'items.product')->get();
+        $this->pendingOrders = Order::pending()->with('user', 'items', 'items.product')->get();
+        $this->reservedOrders = Order::reserved()->with('user', 'items', 'items.product')->get();
     }
 
-    public function markOrderItemAsFulfilled(int $orderItemId): void
+    public function togglePendingCollapsed(): void
     {
-        $orderItem = OrderItem::findOrFail($orderItemId);
+        $this->pendingCollapsed = ! $this->pendingCollapsed;
 
-        $orderItem->load('order');
+        Session::put('current-orders.pending-collapsed', $this->pendingCollapsed);
+    }
 
-        $this->authorizeForUser(auth('employee')->user(), 'update', $orderItem->order);
+    public function toggleReservedCollapsed(): void
+    {
+        $this->reservedCollapsed = ! $this->reservedCollapsed;
 
-        $orderItem->fulfilled = ! $orderItem->fulfilled;
-        $orderItem->save();
-
-        OrderItemChanged::dispatch($orderItem);
+        Session::put('current-orders.reserved-collapsed', $this->reservedCollapsed);
     }
 
     public function render(): View

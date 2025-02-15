@@ -28,7 +28,17 @@ class Order extends Model
      */
     public function getCanReserveAttribute(): bool
     {
-        return $this->status === OrderStatus::PENDING;
+        if (! $this->relationLoaded('items')) {
+            $this->load('items');
+        }
+
+        if ($this->items->isEmpty()) {
+            return false;
+        }
+
+        $allItemsFulfilled = $this->items->every(fn (OrderItem $item) => $item->fulfilled);
+
+        return $this->status === OrderStatus::PENDING && $allItemsFulfilled;
     }
 
     /**
@@ -72,6 +82,11 @@ class Order extends Model
         };
     }
 
+    public function getWireKeyAttribute(): string
+    {
+        return "order-{$this->id}-status-{$this->status->value}";
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -85,5 +100,15 @@ class Order extends Model
     public function scopeCurrent(Builder $query): Builder
     {
         return $query->whereIn('status', [OrderStatus::PENDING, OrderStatus::RESERVED]);
+    }
+
+    public function scopePending(Builder $query): Builder
+    {
+        return $query->whereIn('status', [OrderStatus::PENDING]);
+    }
+
+    public function scopeReserved(Builder $query): Builder
+    {
+        return $query->whereIn('status', [OrderStatus::RESERVED]);
     }
 }
