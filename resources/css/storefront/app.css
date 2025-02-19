@@ -1,0 +1,308 @@
+
+/* Importing Google Fonts - Montserrat*/
+
+@import url('https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400..840;1,400..840&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Monoton:wght@200;300;400;500;600;700;800&display=swap');
+
+/* <----------- Social Login component starts here -----------> */
+
+.container {
+    vertical-align: middle;
+    align-content: space-around;
+    height: 100%;
+}
+
+.login-container {
+    box-sizing: border-box;
+    font-family: "Montserrat", "sans-serif";
+    background:#fff;
+    padding: 2rem 1.5rem;
+    border-radius: 0.5rem;
+    max-width: 410px;
+    margin: 0 auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+#root{
+    width: 100%;
+    padding: 0 0.6rem;
+}
+
+.login-container .form-title {
+    text-align: center;
+    font-size: 1.37rem;
+    font-weight: 600;
+    margin-bottom: 1.87rem;
+}
+
+.social-login .social-button {
+    display: flex;
+    width: 100%;
+    gap: 0.81rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.75rem 0;
+    align-items: center;
+    border-radius: 0.31rem;
+    justify-content: center;
+    border: 1px solid;
+    background: white;
+    transition: 0.3s ease;
+}
+
+.social-login .social-button:hover {
+    background: lightblue;
+    border-color: lightblue;
+}
+
+.social-login .social-button .social-icon{
+    width: 23px;
+}
+
+.login-container .separartor {
+    margin: 1.5rem 0;
+    text-align: center;
+    position: relative;
+}
+
+.login-container .separartor span {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    padding: 0 0.9rem;
+    font-size: 1.06rem;
+    font-weight: 500;
+}
+
+.login-container .separartor::after {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+    background: lightblue;
+}
+
+.login-form .input-wrapper{
+    height: 54px;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    position: relative;
+
+}
+
+.login-form .input-wrapper .input-field {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    font-family: "Montserrat", "sans-serif";
+    font-size: 1.06rem;
+    border-radius: 0.31rem;
+    border: 1px solid lightblue;
+    padding: 0 1.25rem 0 3.12rem;
+    transition: 0.52s ease;
+}
+
+.login-form .input-wrapper .input-field:focus {
+    border-color: gray;
+}
+
+.login-form .input-wrapper .input-field::placeholder {
+    color: black;
+}
+
+.login-form .input-wrapper i {
+    color: black;
+    top: 50%;
+    transform: translateX(16px) translateY(-40px);
+    transition: 0.52s ease;
+}
+
+.login-form .input-wrapper i.eye-icon {
+    transform: translateX(320px) translateY(-66px);
+    cursor: pointer;
+    display: none;
+}
+
+.login-form .input-wrapper .input-field:valid ~ i.eye-icon{
+    display: block;
+}
+
+.login-form .input-wrapper .input-field:focus ~ i {
+    color: gray
+}
+
+.login-form .forgot-pass-link {
+    display: block;
+    width: fit-content;
+    margin-top: -0.46rem;
+}
+
+.login-form .login-button {
+    width: 100%;
+    height: 54px;
+    cursor: pointer;
+    outline: none;
+    font-weight: 500;
+    font-size: 1.125rem;
+    background: #113b5e;
+    margin-top: 2.19rem;
+    border-radius: 0.31rem;
+    border: none;
+    transition: 0.52s ease;
+    color: white;
+}
+
+.login-form .login-button:hover{
+    background: #0a2942;
+}
+
+.login-container .signup-text {
+    text-align: center;
+    font-weight: 500;
+    margin: 1.75rem 0 0.31rem;
+}
+
+.login-container a {
+    color: #5F41E4;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+}
+
+/* <----------- Social Login CSS component ends here -----------> */
+
+
+/* <----------- Base look of Website CSS starts here -----------> */
+
+/* color of sidebar #001529 */
+
+body {
+    background: #001529;
+}
+
+.mainFoodPage {
+    width: 100%;
+
+}
+
+/* .text {
+  margin-top: -500px;
+  margin-left: 300px;
+  font-size: 100px;
+  color: black;
+
+} */
+
+.sidebar {
+    font-family: 'Poppins';
+    margin-top: -7.766px;
+    margin-left: -8.8px;
+    transition: .8s;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin-top: 15px;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-bar {
+    height: 89vh;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-size: 1rem;
+    position: relative;
+}
+
+.footerbar {
+    background: #efefef;
+    margin-top: auto;
+    font-family: 'Poppins';
+    color:#333;
+    text-align: center;
+}
+
+.menuIcon {
+    margin-left: -40px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.contents {
+    background-color: rgb(116, 116, 116);
+
+    /* background-image: url("./assets/mainPageFood.jpg"); */
+
+
+}
+
+.title {
+    font-family: 'Poppins';
+    margin-top: -65px;
+    margin-left: -8px;
+    font-weight: 100;
+    color: #fff;
+}
+
+/* <----------- Base look of Website CSS ends here -----------> */
+
+
+/* <----------- Products Page CSS Starts here -----------> */
+
+.cards {
+    margin-top: 25px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 25px;
+    display: inline-block;
+}
+
+.meta {
+    font-family: 'Poppins';
+}
+
+/* <----------- Products Page CSS ends here -----------> */
+
+
+/* <----------- Scrollbar removal starts here -----------> */
+
+body {
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: lightgray;
+}
+
+::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: darkgray;
+}
+
+/* <----------- Scrollbar removal ends here -----------> */

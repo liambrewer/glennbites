@@ -7,13 +7,10 @@ use Spatie\LaravelPdf\Enums\Orientation;
 use Spatie\LaravelPdf\Facades\Pdf;
 
 Route::domain(parse_url(config('app.url'))['host'])->group(function () {
-    Route::get('/', function () {
-        return view('storefront.home');
-    })->name('home');
-
     Route::get('/orders/{order}/pickup-label', function (Order $order) {
         return view('labels.pickup', compact('order'));
     });
 });
 
+require __DIR__ . '/storefront.php';
 require __DIR__ . '/pos.php';

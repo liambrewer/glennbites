@@ -1,5 +1,5 @@
-import './bootstrap'
-import '../../vendor/masmerise/livewire-toaster/resources/js';
+import '../shared/bootstrap'
+import '../../../vendor/masmerise/livewire-toaster/resources/js/index.js';
 
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
@@ -8,7 +8,7 @@ import timezone from 'dayjs/plugin/timezone'
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
+import { Livewire, Alpine } from '../../../vendor/livewire/livewire/dist/livewire.esm.js';
 
 Alpine.data('duration', (startedAt) => ({
     timer: null,
