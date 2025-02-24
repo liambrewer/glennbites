@@ -7,7 +7,6 @@
     },
     "devDependencies": {
         "@fontsource-variable/onest": "^5.1.1",
-        "@headlessui/react": "^2.2.0",
         "@inertiajs/react": "^2.0.3",
         "@types/node": "^22.13.4",
         "@types/react": "^19.0.10",
