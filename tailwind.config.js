@@ -21,6 +21,7 @@ export default {
         extend: {
             fontFamily: {
                 onest: ['Onest Variable', ...defaultTheme.fontFamily.sans],
+                'ibm-plex-sans': ['IBM Plex Sans', ...defaultTheme.fontFamily.sans],
             },
         },
     },

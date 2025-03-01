@@ -1,4 +1,10 @@
-<!doctype html>
+@php
+    use chillerlan\QRCode\QRCode;
+
+    $qrcode = (new QRCode())->render("https://example.comhttps://example.comhttps://example.com");
+@endphp
+
+    <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,41 +19,44 @@
                 size: 4in 2.25in;
                 margin: 0;
             }
-            html, body {
-                margin: 0;
-                padding: 0;
-                width: 4in;
-                height: 2.25in;
-            }
         }
     </style>
 
-    @vite('resources/css/app.css')
+    @vite('resources/css/pos/app.css')
 </head>
-<body class="flex flex-col h-full p-4 box-border gap-2 font-onest">
-<div class="grid grid-cols-4 w-full items-center text-xs">
-    <span class="text-lg uppercase font-semibold text-start">Pickup</span>
-    <span class="text-center">Order #: {{ $order->id }}</span>
-    <span class="text-center">Items: {{ $order->items->sum('quantity') }}</span>
-    <div class="text-end leading-3">
-        <div>{{ $order->created_at->format('g:i A') }}</div>
-        <div>{{ $order->created_at->format('m/d/Y') }}</div>
-    </div>
-</div>
+<body>
+<div class="bg-white text-black font-onest" style="width: 4in; height: 2.25in;">
+    <div class="flex flex-col h-full">
+        <div class="flex justify-between items-start p-3 border-b border-b-black">
+            <div class="flex flex-col justify-between grow pr-2 h-full" style="max-width: calc(100% - 80px);">
+                <div class="flex gap-1 text-xs">
+                    <div>
+                        <span class="font-semibold">Order:</span> #{{ $order->id }}
+                    </div>
 
-<div class="grow flex justify-between w-full">
+                    <div>
+                        <span class="font-semibold">Items:</span> {{ $order->items->sum('quantity') }}
+                    </div>
+                </div>
 
-    <div class="flex flex-col justify-start">
-        <h2 class="text-2xl font-bold overflow-clip line-clamp-1">{{ $order->user->name }}</h2>
-        <p class="text-sm">Placed At: {{ $order->created_at->format('g:i A') }}</p>
+                <div class="text-xl font-bold truncate w-full leading-none">{{ $order->user->name }}</div>
 
-        <div class="grow"></div>
+                <x-pos.cash-and-card-totals :total="$order->total" />
+            </div>
 
-        <p class="text-lg font-bold">Total Due: ${{ $order->total }}</p>
-    </div>
+            <img src="{{ $qrcode }}" alt="QR Code" class="size-16 shrink-0" />
+        </div>
 
-    <div class="flex items-end justify-end flex-shrink-0">
-        <img src="{{ (new chillerlan\QRCode\QRCode)->render('http://glennbites.test/orders/1') }}" alt="QR Code" class="size-32">
+        <div class="flex-1 overflow-hidden divide-y divide-black" style="max-height: 1.25in;">
+            @foreach($order->items as $item)
+                <div class="flex justify-between text-sm px-3 py-0.5">
+                    <div class="truncate pr-2" style="max-width: 2.75in;">
+                        <span class="font-semibold">{{ $item->quantity }}x</span> {{ $item->product->name }}
+                    </div>
+                    <div class="text-right">${{ number_format($item->total, 2) }}</div>
+                </div>
+            @endforeach
+        </div>
     </div>
 </div>
 </body>

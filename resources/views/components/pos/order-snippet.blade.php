@@ -26,9 +26,9 @@
         @endforeach
 
             <li class="flex items-center justify-between">
-                <div class="text-lg text-gray-800 font-semibold">Total</div>
+                <div class="text-gray-800 font-semibold text-lg">Total</div>
 
-                <div class="text-sm text-gray-600">${{ number_format((float) $order->total, 2, '.', '') }}</div>
+                <x-pos.cash-and-card-totals :total="$order->total" />
             </li>
     </ul>
 </div>

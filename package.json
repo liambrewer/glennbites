@@ -6,7 +6,9 @@
         "dev": "vite"
     },
     "devDependencies": {
+        "@fontsource-variable/doto": "^5.0.1",
         "@fontsource-variable/onest": "^5.1.1",
+        "@fontsource/ibm-plex-sans": "^5.1.1",
         "@inertiajs/react": "^2.0.3",
         "@types/node": "^22.13.4",
         "@types/react": "^19.0.10",

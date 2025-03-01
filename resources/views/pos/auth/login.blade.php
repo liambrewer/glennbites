@@ -1,4 +1,4 @@
-<x-base-layout>
+<x-layouts.base-layout>
     <div class="fixed inset-0 flex flex-col gap-10 items-center justify-center">
         <h1 class="text-2xl font-semibold">Employee Login</h1>
 
@@ -13,4 +13,4 @@
             <x-ui.button.primary type="submit">Log in</x-ui.button.primary>
         </form>
     </div>
-</x-base-layout>
+</x-layouts.base-layout>

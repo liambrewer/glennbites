@@ -57,7 +57,7 @@ Alpine.data('orderPrinter', (orderId) => ({
                     this.printing = false;
                     document.body.removeChild(iframe);
                 }
-            }, 5000);
+            }, 1000 * 10); // 10 second wait
         };
 
         document.body.appendChild(iframe);

@@ -1,4 +1,4 @@
-<x-pos-layout>
+<x-layouts.pos-layout>
     <h1 class="text-lg font-semibold mb-5">Activity Stream</h1>
 
     <ul class="divide-y">
@@ -12,4 +12,4 @@
             </li>
         @endforeach
     </ul>
-</x-pos-layout>
+</x-layouts.pos-layout>

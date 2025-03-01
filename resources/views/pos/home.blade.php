@@ -1,4 +1,4 @@
-<x-pos-layout>
+<x-layouts.pos-layout>
     <h1 class="text-lg font-semibold mb-5">Home</h1>
 
     <div class="grid grid-cols-2 gap-5 justify-items-stretch place-items-start">
@@ -22,4 +22,4 @@
             </div>
         </x-pos.dashboard-card>
     </div>
-</x-pos-layout>
+</x-layouts.pos-layout>

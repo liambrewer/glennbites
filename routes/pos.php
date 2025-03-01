@@ -3,6 +3,7 @@
 use App\Http\Controllers\POS;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 use Spatie\Browsershot\Browsershot;
 use Spatie\LaravelPdf\Enums\Orientation;
 use Spatie\LaravelPdf\Facades\Pdf;
@@ -18,7 +19,7 @@ Route::domain('pos.' . parse_url(config('app.url'))['host'])->name('pos.')->grou
         Route::get('/', POS\HomeController::class)->name('home');
 
         Route::name('orders.')->prefix('/orders')->controller(POS\OrderController::class)->group(function () {
-            Route::get('/', 'index')->name('index');
+            Volt::route('/', 'pos.orders.index')->name('index');
 
             Route::get('/{order}/pickup-label.pdf', function (Order $order) {
                 return Pdf::view('labels.pickup', compact('order'))

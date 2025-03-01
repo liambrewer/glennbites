@@ -1,3 +1,5 @@
+@props(['order', 'actions'])
+
 @use(App\Enums\OrderStatus)
 
 <li class="flex flex-col">
@@ -23,12 +25,24 @@
         @endif
     </div>
 
-    <div class="border-x border-b bg-white rounded-b-xl">
+    <div class="border-x border-b bg-white rounded-b-xl shadow">
         <div class="px-2.5 py-3">
             <h4 class="text-sm text-gray-600">Order #{{ $order->id }}</h4>
             <h3 class="text-lg text-gray-800 font-semibold">{{ $order->user->name }}</h3>
         </div>
 
         {{ $slot }}
+
+        <div class="flex items-center justify-between px-2.5 py-3">
+            <div class="text-gray-600 font-semibold">Total</div>
+
+            <x-pos.cash-and-card-totals :total="$order->total" />
+        </div>
+
+        @isset ($actions)
+            <div class="flex flex-col gap-2.5 p-2.5">
+                {{ $actions }}
+            </div>
+        @endif
     </div>
 </li>
