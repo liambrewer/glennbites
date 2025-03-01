@@ -8,10 +8,10 @@
 
     @routes
     @viteReactRefresh
-    @vite(['resources/js/storefront/app.tsx', "resources/js/storefront/Pages/{$page['component']}.tsx"])
+    @vite(['resources/js/storefront/app.tsx', "resources/js/storefront/Pages/{$page['component']}.tsx", 'resources/css/storefront/app.css'])
     @inertiaHead
 </head>
-<body>
+<body class="font-onest antialiased">
     @inertia
 </body>
 </html>

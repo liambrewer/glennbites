@@ -23,14 +23,14 @@ return Application::configure(basePath: dirname(__DIR__))
                 if ($request->routeIs('pos.*')) {
                     return route('pos.auth.show-login-form');
                 } else {
-                    return route('home');
+                    return route('storefront.auth.show-login-form');
                 }
             },
             users: function (Request $request) {
                 if ($request->user('employee') !== null) {
                     return route('pos.home');
                 } else {
-                    return route('home');
+                    return route('storefront.home');
                 }
             },
         );

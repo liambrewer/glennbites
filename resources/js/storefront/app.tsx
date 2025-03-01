@@ -1,4 +1,3 @@
-import '../../css/storefront/app.css';
 import '../shared/bootstrap';
 
 import { createInertiaApp } from '@inertiajs/react';
