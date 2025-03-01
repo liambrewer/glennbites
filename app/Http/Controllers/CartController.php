@@ -5,17 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CartAddRequest;
 use App\Http\Requests\CartDeleteRequest;
 use App\Http\Requests\CartRemoveRequest;
-use App\Http\Resources\ProductResource;
-use App\Models\Product;
 use App\Services\CartService;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CartController extends Controller
 {
-    public function __construct(protected CartService $cartService)
-    {
-    }
+    public function __construct(protected CartService $cartService) {}
 
     public function index()
     {

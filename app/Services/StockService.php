@@ -3,29 +3,20 @@
 namespace App\Services;
 
 use App\Enums\StockMovementType;
-use App\Exceptions\ExceedsMaxPerOrderException;
-use App\Exceptions\InvalidQuantityException;
 use App\Exceptions\InvalidStockAdjustmentException;
 use App\Exceptions\NotEnoughStockException;
-use App\Exceptions\OutOfStockException;
 use App\Models\Employee;
 use App\Models\Product;
 use App\Models\StockMovement;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\ValidationException;
 
 class StockService
 {
     /**
-     * @param int $productId
-     * @param int $quantity
-     * @param User|Employee|null $actor
-     * @param string|null $reason
-     * @return Product
      * @throws NotEnoughStockException
      */
-    public function reserveStock(int $productId, int $quantity, User|Employee|null $actor = null, string|null $reason = null): Product
+    public function reserveStock(int $productId, int $quantity, User|Employee|null $actor = null, ?string $reason = null): Product
     {
         DB::beginTransaction();
 
@@ -52,14 +43,9 @@ class StockService
     }
 
     /**
-     * @param int $productId
-     * @param int $quantity
-     * @param User|Employee|null $actor
-     * @param string|null $reason
-     * @return Product
      * @throws \Exception
      */
-    public function releaseStock(int $productId, int $quantity, User|Employee|null $actor = null, string|null $reason = null): Product
+    public function releaseStock(int $productId, int $quantity, User|Employee|null $actor = null, ?string $reason = null): Product
     {
         DB::beginTransaction();
 
@@ -82,14 +68,9 @@ class StockService
     }
 
     /**
-     * @param int $productId
-     * @param int $quantity
-     * @param Employee|null $actor
-     * @param string|null $reason
-     * @return Product
      * @throws InvalidStockAdjustmentException
      */
-    public function adjustStock(int $productId, int $quantity, Employee|null $actor = null, string|null $reason = null): Product
+    public function adjustStock(int $productId, int $quantity, ?Employee $actor = null, ?string $reason = null): Product
     {
         DB::beginTransaction();
 
@@ -99,7 +80,7 @@ class StockService
             $newStockOnHand = $product->stock_on_hand + $quantity;
 
             if ($newStockOnHand < $product->reserved_stock) {
-                throw new InvalidStockAdjustmentException("The stock may not be adjusted under the current reserved stock number. Please release stock if further adjustment is required.");
+                throw new InvalidStockAdjustmentException('The stock may not be adjusted under the current reserved stock number. Please release stock if further adjustment is required.');
             }
 
             $product->stock_on_hand = $newStockOnHand;
@@ -118,14 +99,9 @@ class StockService
     }
 
     /**
-     * @param int $productId
-     * @param int $quantity
-     * @param Employee|null $actor
-     * @param string|null $reason
-     * @return Product
      * @throws \Exception
      */
-    public function completeStock(int $productId, int $quantity, Employee|null $actor = null, string|null $reason = null): Product
+    public function completeStock(int $productId, int $quantity, ?Employee $actor = null, ?string $reason = null): Product
     {
         DB::beginTransaction();
 
@@ -151,7 +127,7 @@ class StockService
         }
     }
 
-    public function logMovement(int $productId, int $quantity, StockMovementType $type, User|Employee|null $actor = null, string|null $reason = null): void
+    public function logMovement(int $productId, int $quantity, StockMovementType $type, User|Employee|null $actor = null, ?string $reason = null): void
     {
         StockMovement::create([
             'product_id' => $productId,

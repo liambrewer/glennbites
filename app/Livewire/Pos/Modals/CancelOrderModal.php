@@ -31,9 +31,9 @@ class CancelOrderModal extends ModalComponent
         try {
             $this->orderService->shortOrder($this->order->id, auth('employee')->user());
 
-            $this->success("Order shorted.");
+            $this->success('Order shorted.');
         } catch (OrderNotFoundException|OrderShortException $e) {
-            $this->error("Failed to short order: " . $e->getMessage());
+            $this->error('Failed to short order: '.$e->getMessage());
         } finally {
             $this->closeModal();
         }
@@ -46,9 +46,9 @@ class CancelOrderModal extends ModalComponent
         try {
             $this->orderService->cancelOrder($this->order->id, auth('employee')->user());
 
-            $this->success("Order canceled.");
+            $this->success('Order canceled.');
         } catch (OrderNotFoundException|OrderCancellationException $e) {
-            $this->error("Failed to cancel order: " . $e->getMessage());
+            $this->error('Failed to cancel order: '.$e->getMessage());
         } finally {
             $this->closeModal();
         }

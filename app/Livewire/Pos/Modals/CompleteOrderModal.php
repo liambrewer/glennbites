@@ -30,9 +30,9 @@ class CompleteOrderModal extends ModalComponent
         try {
             $this->orderService->completeOrder($this->order->id, auth('employee')->user());
 
-            $this->success("Order completed.");
+            $this->success('Order completed.');
         } catch (OrderNotFoundException|OrderCompletionException $e) {
-            $this->error("Failed to complete order: " . $e->getMessage());
+            $this->error('Failed to complete order: '.$e->getMessage());
         } finally {
             $this->closeModal();
         }

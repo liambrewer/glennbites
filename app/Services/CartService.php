@@ -2,10 +2,6 @@
 
 namespace App\Services;
 
-use App\Exceptions\ExceedsMaxPerOrderException;
-use App\Exceptions\InvalidQuantityException;
-use App\Exceptions\NotEnoughStockException;
-use App\Exceptions\OutOfStockException;
 use App\Exceptions\ProductNotFoundException;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
@@ -33,15 +29,14 @@ class CartService
     /**
      * Adds an item to the cart.
      *
-     * @param int $productId
-     * @param int $quantity
-     * @return void
      * @throws ProductNotFoundException
      */
     public function addToCart(int $productId, int $quantity): void
     {
         $product = Product::find($productId);
-        if (!$product) throw new ProductNotFoundException();
+        if (! $product) {
+            throw new ProductNotFoundException;
+        }
 
         $cart = $this->getCart();
 

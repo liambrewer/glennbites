@@ -5,7 +5,6 @@ namespace App\Http\Controllers\POS;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class HomeController extends Controller
 {

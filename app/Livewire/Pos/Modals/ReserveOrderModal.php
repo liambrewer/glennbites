@@ -30,9 +30,9 @@ class ReserveOrderModal extends ModalComponent
         try {
             $this->orderService->reserveOrder($this->order->id, auth('employee')->user());
 
-            $this->success("Order reserved.");
+            $this->success('Order reserved.');
         } catch (OrderNotFoundException|OrderReservationException $e) {
-            $this->error("Failed to reserve order: " . $e->getMessage());
+            $this->error('Failed to reserve order: '.$e->getMessage());
         } finally {
             $this->closeModal();
         }

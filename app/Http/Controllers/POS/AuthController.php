@@ -4,13 +4,10 @@ namespace App\Http\Controllers\POS;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\POS\Auth\LoginRequest;
-use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Inertia\Inertia;
 
 class AuthController extends Controller
 {
@@ -25,7 +22,7 @@ class AuthController extends Controller
 
         $employee = Employee::where('employee_number', $validated['employee_number'])->first();
 
-        if (!$employee || !Hash::check($validated['pin'], $employee->pin)) {
+        if (! $employee || ! Hash::check($validated['pin'], $employee->pin)) {
             return back()->withErrors(['employee_number' => 'The provided credentials do not match our records.'])->onlyInput('employee_number');
         }
 

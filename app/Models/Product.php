@@ -37,8 +37,6 @@ class Product extends Model
     /**
      * Validates that a given quantity of an item is permitted.
      *
-     * @param int $quantity
-     * @return void
      * @throws OutOfStockException
      * @throws InvalidQuantityException
      * @throws ExceedsMaxPerOrderException
@@ -46,9 +44,17 @@ class Product extends Model
      */
     public function ensureValidQuantity(int $quantity): void
     {
-        if ($this->out_of_stock) throw new OutOfStockException();
-        if ($quantity < 1) throw new InvalidQuantityException("Quantity must be greater than 1.");
-        if ($this->max_per_order && $quantity > $this->max_per_order) throw new ExceedsMaxPerOrderException("You cannot order more than {$this->max_per_order} units of {$this->name}.");
-        if ($quantity > $this->available_stock) throw new NotEnoughStockException("Not enough stock for {$this->name}. Only {$this->available_stock} left.");
+        if ($this->out_of_stock) {
+            throw new OutOfStockException;
+        }
+        if ($quantity < 1) {
+            throw new InvalidQuantityException('Quantity must be greater than 1.');
+        }
+        if ($this->max_per_order && $quantity > $this->max_per_order) {
+            throw new ExceedsMaxPerOrderException("You cannot order more than {$this->max_per_order} units of {$this->name}.");
+        }
+        if ($quantity > $this->available_stock) {
+            throw new NotEnoughStockException("Not enough stock for {$this->name}. Only {$this->available_stock} left.");
+        }
     }
 }

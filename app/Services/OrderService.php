@@ -28,14 +28,9 @@ use Illuminate\Support\Facades\DB;
 
 class OrderService
 {
-    public function __construct(protected StockService $stockService)
-    {
-    }
+    public function __construct(protected StockService $stockService) {}
 
     /**
-     * @param User $user
-     * @param array $items
-     * @return Order
      * @throws NotEnoughStockException
      * @throws OrderCreationException
      */
@@ -82,9 +77,6 @@ class OrderService
     }
 
     /**
-     * @param int $orderId
-     * @param Employee $employee
-     * @return Order
      * @throws OrderNotFoundException
      * @throws OrderReservationException
      */
@@ -95,7 +87,9 @@ class OrderService
         try {
             $order = $this->lockedOrder($orderId);
 
-            if (!$order->can_reserve) throw new OrderReservationException();
+            if (! $order->can_reserve) {
+                throw new OrderReservationException;
+            }
 
             $order->status = OrderStatus::RESERVED;
             $order->status_changed_at = now();
@@ -114,9 +108,6 @@ class OrderService
     }
 
     /**
-     * @param int $orderId
-     * @param Employee $employee
-     * @return Order
      * @throws OrderCompletionException
      * @throws OrderNotFoundException
      */
@@ -127,7 +118,9 @@ class OrderService
         try {
             $order = $this->lockedOrder($orderId);
 
-            if (!$order->can_complete) throw new OrderCompletionException();
+            if (! $order->can_complete) {
+                throw new OrderCompletionException;
+            }
 
             $order->load('items');
 
@@ -152,9 +145,6 @@ class OrderService
     }
 
     /**
-     * @param int $orderId
-     * @param User|Employee $actor
-     * @return Order
      * @throws OrderCancellationException
      * @throws OrderNotFoundException
      */
@@ -165,7 +155,9 @@ class OrderService
         try {
             $order = $this->lockedOrder($orderId);
 
-            if (!$order->can_cancel) throw new OrderCancellationException();
+            if (! $order->can_cancel) {
+                throw new OrderCancellationException;
+            }
 
             $order->load('items');
 
@@ -190,9 +182,6 @@ class OrderService
     }
 
     /**
-     * @param int $orderId
-     * @param Employee $employee
-     * @return Order
      * @throws OrderNotFoundException
      * @throws OrderShortException
      */
@@ -203,7 +192,9 @@ class OrderService
         try {
             $order = $this->lockedOrder($orderId);
 
-            if (!$order->can_short) throw new OrderShortException();
+            if (! $order->can_short) {
+                throw new OrderShortException;
+            }
 
             $order->load('items');
 
@@ -228,23 +219,27 @@ class OrderService
     }
 
     /**
-     * @param array $items
-     * @return void
      * @throws OrderCreationException
      */
     protected function validateOrderItems(array $items): void
     {
-        if (empty($items)) throw new OrderCreationException("Order is empty.");
+        if (empty($items)) {
+            throw new OrderCreationException('Order is empty.');
+        }
 
         $productIds = array_column($items, 'product_id');
 
-        if (count($productIds) !== count(array_unique($productIds))) throw new OrderCreationException("Order items must be unique.");
+        if (count($productIds) !== count(array_unique($productIds))) {
+            throw new OrderCreationException('Order items must be unique.');
+        }
 
         try {
             foreach ($items as $item) {
                 $product = Product::find($item['product_id'])->first();
 
-                if (!$product) throw new ProductNotFoundException();
+                if (! $product) {
+                    throw new ProductNotFoundException;
+                }
 
                 $product->ensureValidQuantity($item['quantity']);
             }
@@ -254,15 +249,15 @@ class OrderService
     }
 
     /**
-     * @param int $orderId
-     * @return Order
      * @throws OrderNotFoundException
      */
     protected function lockedOrder(int $orderId): Order
     {
         $order = Order::lockForUpdate()->find($orderId);
 
-        if (!$orderId) throw new OrderNotFoundException();
+        if (! $orderId) {
+            throw new OrderNotFoundException;
+        }
 
         return $order;
     }

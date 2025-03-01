@@ -23,8 +23,6 @@ class Order extends Model
 
     /**
      * Order may only be reserved if it is pending.
-     *
-     * @return bool
      */
     public function getCanReserveAttribute(): bool
     {
@@ -43,8 +41,6 @@ class Order extends Model
 
     /**
      * Order may only be completed if it is reserved.
-     *
-     * @return bool
      */
     public function getCanCompleteAttribute(): bool
     {
@@ -53,8 +49,6 @@ class Order extends Model
 
     /**
      * Order may only be cancelled if it is pending or reserved.
-     *
-     * @return bool
      */
     public function getCanCancelAttribute(): bool
     {
@@ -63,8 +57,6 @@ class Order extends Model
 
     /**
      * Order may only be shorted if it is pending.
-     *
-     * @return bool
      */
     public function getCanShortAttribute(): bool
     {

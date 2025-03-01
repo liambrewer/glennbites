@@ -2,9 +2,6 @@
 
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
-use Spatie\Browsershot\Browsershot;
-use Spatie\LaravelPdf\Enums\Orientation;
-use Spatie\LaravelPdf\Facades\Pdf;
 
 Route::domain(parse_url(config('app.url'))['host'])->group(function () {
     Route::get('/orders/{order}/pickup-label', function (Order $order) {
@@ -12,5 +9,5 @@ Route::domain(parse_url(config('app.url'))['host'])->group(function () {
     });
 });
 
-require __DIR__ . '/storefront.php';
-require __DIR__ . '/pos.php';
+require __DIR__.'/storefront.php';
+require __DIR__.'/pos.php';

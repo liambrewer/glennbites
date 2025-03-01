@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Employee;
-use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -12,9 +11,7 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    public function __construct(protected OrderService $orderService)
-    {
-    }
+    public function __construct(protected OrderService $orderService) {}
 
     /**
      * Seed the application's database.
@@ -60,21 +57,21 @@ class DatabaseSeeder extends Seeder
             [
                 'product_id' => 2,
                 'quantity' => 2,
-            ]
+            ],
         ]);
 
         $this->orderService->createOrder($user, [
             [
                 'product_id' => 2,
                 'quantity' => 1,
-            ]
+            ],
         ]);
 
         $this->orderService->createOrder($user, [
             [
                 'product_id' => 1,
                 'quantity' => 3,
-            ]
+            ],
         ]);
     }
 }

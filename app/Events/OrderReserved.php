@@ -3,9 +3,7 @@
 namespace App\Events;
 
 use App\Models\Order;
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Contracts\Events\ShouldDispatchAfterCommit;
@@ -32,7 +30,7 @@ class OrderReserved implements ShouldBroadcastNow, ShouldDispatchAfterCommit
     {
         return [
             new PrivateChannel('orders'),
-            new PrivateChannel('orders.' . $this->order->id),
+            new PrivateChannel('orders.'.$this->order->id),
         ];
     }
 }
