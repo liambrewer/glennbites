@@ -30,7 +30,7 @@ export default function TextInput({
             </span>
             <input
                 className={cn(
-                    "px-3 py-2.5 text-sm border bg-white rounded ring-blue-200 duration-150 focus:bg-white focus:outline-none focus:border-blue-500 focus:ring read-only:text-gray-400 read-only:bg-gray-100",
+                    "px-3 py-2.5 text-sm border bg-white rounded ring-blue-200 duration-150 focus:bg-white focus:outline-none focus:border-blue-500 focus:ring read-only:text-gray-400 read-only:bg-gray-50",
                     {
                         "border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-200":
                             isError,
