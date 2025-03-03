@@ -4,7 +4,6 @@ use App\Http\Controllers\Storefront\AuthController;
 use App\Http\Controllers\Storefront\OnboardingController;
 use App\Http\Controllers\Storefront\ProductsController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::domain(parse_url(config('app.url'))['host'])->name('storefront.')->group(function () {
     Route::controller(AuthController::class)->name('auth.')->group(function () {

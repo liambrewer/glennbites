@@ -10,8 +10,8 @@ class GetUserFromEmail
     {
         $user = User::where('email', $email)->first();
 
-        if (!$user) {
-            $user = new User();
+        if (! $user) {
+            $user = new User;
             $user->email = $email;
             $user->save();
         }

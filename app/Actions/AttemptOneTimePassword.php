@@ -6,7 +6,6 @@ use App\Enums\OneTimePasswordStatus;
 use App\Exceptions\OneTimePasswordAttemptException;
 use App\Models\OneTimePassword;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
 
 class AttemptOneTimePassword
@@ -36,8 +35,8 @@ class AttemptOneTimePassword
      */
     private function validateSignature(): void
     {
-        if (!request()->hasValidSignature()) {
-            if (!URL::signatureHasNotExpired(request())) {
+        if (! request()->hasValidSignature()) {
+            if (! URL::signatureHasNotExpired(request())) {
                 throw new OneTimePasswordAttemptException(OneTimePasswordStatus::SIGNATURE->errorMessage());
             }
 
@@ -93,7 +92,7 @@ class AttemptOneTimePassword
      */
     private function validateCode(OneTimePassword $otp, string $code): void
     {
-        if (!Hash::check($code, $otp->code)) {
+        if (! Hash::check($code, $otp->code)) {
             $otp->increment('attempts');
             throw new OneTimePasswordAttemptException(OneTimePasswordStatus::INVALID->errorMessage());
         }

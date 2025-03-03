@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Storefront;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Storefront\StoreOnboardingRequest;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class OnboardingController extends Controller
@@ -20,7 +19,7 @@ class OnboardingController extends Controller
 
         $user = auth('web')->user();
 
-        if (!$user->onboarded) {
+        if (! $user->onboarded) {
             $user->update(['name' => $validated['first_name'].' '.$validated['last_name'], 'onboarded_at' => now()]);
         }
 

@@ -9,20 +9,11 @@ use App\Exceptions\OneTimePasswordAttemptException;
 use App\Exceptions\OneTimePasswordThrottleException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Storefront\Auth\AttemptOneTimePasswordRequest;
-use App\Http\Requests\Storefront\Auth\CompleteRegistrationRequest;
-use App\Http\Requests\Storefront\Auth\SendLoginLinkRequest;
 use App\Http\Requests\Storefront\Auth\SendOneTimePasswordRequest;
-use App\Mail\OneTimePasswordMail;
-use App\Models\LoginToken;
 use App\Models\OneTimePassword;
-use App\Models\User;
-use App\Notifications\LoginLinkNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
@@ -56,7 +47,7 @@ class AuthController extends Controller
     {
         $sid = $request->session()->getId();
 
-        if (!$request->hasValidSignature()) {
+        if (! $request->hasValidSignature()) {
             return redirect()->route('storefront.auth.show-login-form')->with('status', OneTimePasswordStatus::SIGNATURE->errorMessage());
         }
 

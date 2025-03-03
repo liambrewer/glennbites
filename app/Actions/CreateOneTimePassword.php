@@ -25,7 +25,8 @@ class CreateOneTimePassword
 
     /**
      * @throws OneTimePasswordThrottleException
-     */public function throttle(User $user): void
+     */
+    public function throttle(User $user): void
     {
         $thresholds = [
             ['limit' => 1, 'minutes' => 1],

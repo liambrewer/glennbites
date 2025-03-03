@@ -32,11 +32,11 @@ class LoginLinkNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->subject('Your Login Link')
-                    ->line('You are receiving this email because we received a login request for your account.')
-                    ->action('Login', $this->signedUrl)
-                    ->line('This login link will expire in 30 minutes.')
-                    ->line('If you did not request a login, no further action is required.');
+            ->subject('Your Login Link')
+            ->line('You are receiving this email because we received a login request for your account.')
+            ->action('Login', $this->signedUrl)
+            ->line('This login link will expire in 30 minutes.')
+            ->line('If you did not request a login, no further action is required.');
     }
 
     /**
