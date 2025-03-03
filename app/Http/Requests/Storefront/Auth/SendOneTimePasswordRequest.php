@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Storefront\Auth;
 
+use App\Rules\LeanderIsdDomain;
+use App\Rules\NoEmailPlusAddress;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SendOneTimePasswordRequest extends FormRequest
 {
@@ -22,7 +25,7 @@ class SendOneTimePasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email', 'max:255', 'regex:/(.*)@k12\.leanderisd\.org/i'],
+            'email' => ['required', 'email', 'max:255', new NoEmailPlusAddress(), new LeanderIsdDomain()],
         ];
     }
 
