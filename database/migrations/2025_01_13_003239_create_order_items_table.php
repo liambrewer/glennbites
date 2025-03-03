@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
+
             $table->foreignIdFor(Order::class)->constrained()->restrictOnDelete();
             $table->foreignIdFor(Product::class)->constrained()->restrictOnDelete();
             $table->integer('quantity');
             $table->decimal('price', 15, 2);
             $table->timestamp('fulfilled_at')->nullable();
+
             $table->timestamps();
 
             $table->unique(['order_id', 'product_id']);

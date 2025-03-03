@@ -14,11 +14,13 @@ return new class extends Migration
     {
         Schema::create('stock_movements', function (Blueprint $table) {
             $table->id();
+
             $table->nullableMorphs('actor');
             $table->foreignIdFor(Product::class)->constrained()->restrictOnDelete();
             $table->integer('quantity_change');
             $table->enum('type', ['reserve', 'release', 'manual_adjustment', 'order_complete']);
             $table->string('reason')->nullable();
+
             $table->timestamps();
         });
     }

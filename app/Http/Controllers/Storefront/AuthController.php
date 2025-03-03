@@ -2,105 +2,92 @@
 
 namespace App\Http\Controllers\Storefront;
 
+use App\Actions\AttemptOneTimePassword;
+use App\Actions\SendOneTimePassword;
+use App\Enums\OneTimePasswordStatus;
+use App\Exceptions\OneTimePasswordAttemptException;
+use App\Exceptions\OneTimePasswordThrottleException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Storefront\Auth\AttemptOneTimePasswordRequest;
 use App\Http\Requests\Storefront\Auth\CompleteRegistrationRequest;
 use App\Http\Requests\Storefront\Auth\SendLoginLinkRequest;
+use App\Http\Requests\Storefront\Auth\SendOneTimePasswordRequest;
+use App\Mail\OneTimePasswordMail;
 use App\Models\LoginToken;
+use App\Models\OneTimePassword;
 use App\Models\User;
 use App\Notifications\LoginLinkNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class AuthController extends Controller
 {
-    public function showLoginForm()
+    public function showLoginForm(Request $request)
     {
-        return Inertia::render('Auth/Login');
+        return Inertia::render('Auth/Login', [
+            'status' => $request->session()->get('status'),
+        ]);
     }
 
-    public function sendLoginLink(SendLoginLinkRequest $request)
+    public function sendOneTimePassword(SendOneTimePasswordRequest $request)
     {
         $validated = $request->validated();
 
-        $loginToken = LoginToken::generateForEmail($validated['email']);
+        $email = strtolower($validated['email']);
 
-        $signedUrl = URL::temporarySignedRoute(
-            'storefront.auth.handle-login-link',
-            now()->addMinutes(30),
-            ['token' => $loginToken->token]
-        );
+        try {
+            $otp = (new SendOneTimePassword)->handle($email);
 
-        Notification::route('mail', $validated['email'])
-            ->notify(new LoginLinkNotification($signedUrl));
-
-        return back()->with('message', 'Login link sent!');
+            return redirect($otp->url);
+        } catch (OneTimePasswordThrottleException $e) {
+            throw ValidationException::withMessages([
+                'email' => $e->getMessage(),
+            ]);
+        }
     }
 
-    public function handleLoginLink(Request $request, $token)
+    public function showOneTimePasswordForm(Request $request, OneTimePassword $otp)
     {
+        $sid = $request->session()->getId();
+
         if (!$request->hasValidSignature()) {
-            abort(401, 'This link has expired or is invalid.');
+            return redirect()->route('storefront.auth.show-login-form')->with('status', OneTimePasswordStatus::SIGNATURE->errorMessage());
         }
 
-        $loginToken = LoginToken::findValidToken($token);
-
-        if (!$loginToken) {
-            abort(401, 'This link has expired or is invalid.');
+        if ($request['sid'] !== $sid) {
+            return redirect()->route('storefront.auth.show-login-form')->with('status', OneTimePasswordStatus::SESSION->errorMessage());
         }
 
-        $email = $loginToken->email;
+        $url = URL::temporarySignedRoute('storefront.auth.attempt-one-time-password', now()->addMinutes(5), [
+            'id' => $otp->id,
+            'sid' => $sid,
+        ]);
 
-        $loginToken->markAsUsed();
-
-        $user = User::where('email', $email)->first();
-
-        if ($user) {
-            Auth::guard('web')->login($user);
-            return redirect()->intended(route('storefront.home'));
-        } else {
-            session(['registration_email' => $email]);
-            return redirect()->route('storefront.auth.show-register-form');
-        }
-    }
-
-    public function showRegisterForm()
-    {
-        $email = session('registration_email');
-
-        if (!$email) {
-            return redirect()->route('storefront.auth.show-login-form');
-        }
-
-        return Inertia::render('Auth/Register', [
-            'email' => $email,
+        return Inertia::render('Auth/OneTimePassword', [
+            'email' => $otp->user->email,
+            'url' => $url,
         ]);
     }
 
-    public function completeRegistration(CompleteRegistrationRequest $request)
+    public function attemptOneTimePassword(AttemptOneTimePasswordRequest $request, string $id)
     {
         $validated = $request->validated();
 
-        $email = session('registration_email');
+        try {
+            $otp = (new AttemptOneTimePassword)->handle($id, $validated['sid'], $validated['code']);
 
-        if (!$email) {
-            abort(401, 'Registration session expired.');
+            auth()->guard('web')->login($otp->user);
+
+            return redirect()->intended(route('storefront.home'));
+        } catch (OneTimePasswordAttemptException $e) {
+            throw ValidationException::withMessages(['code' => $e->getMessage()]);
         }
-
-        $user = User::create([
-            'email' => $email,
-            'name' => $validated['first_name'].' '.$validated['last_name'],
-            'password' => Str::random(20),
-        ]);
-
-        session()->forget('registration_email');
-
-        Auth::guard('web')->login($user);
-
-        return redirect()->intended(route('storefront.home'));
     }
 
     public function logout(Request $request)

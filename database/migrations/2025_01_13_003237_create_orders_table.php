@@ -14,10 +14,12 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+
             $table->foreignIdFor(User::class)->constrained()->restrictOnDelete();
             $table->enum('status', ['pending', 'reserved', 'completed', 'canceled', 'shorted'])->default('pending');
             $table->decimal('total', 15, 2);
             $table->timestamp('status_changed_at')->useCurrent();
+
             $table->timestamps();
         });
     }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Storefront\AuthController;
+use App\Http\Controllers\Storefront\OnboardingController;
 use App\Http\Controllers\Storefront\ProductsController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -9,12 +10,10 @@ Route::domain(parse_url(config('app.url'))['host'])->name('storefront.')->group(
     Route::controller(AuthController::class)->name('auth.')->group(function () {
         Route::middleware(['guest:web'])->group(function () {
             Route::get('login', 'showLoginForm')->name('show-login-form');
-            Route::post('login', 'sendLoginLink')->name('send-login-link');
+            Route::post('login', 'sendOneTimePassword')->name('send-one-time-password');
 
-            Route::get('login/{token}', 'handleLoginLink')->name('handle-login-link');
-
-            Route::get('register', 'showRegisterForm')->name('show-register-form');
-            Route::post('register', 'completeRegistration')->name('complete-registration');
+            Route::get('login/{otp}', 'showOneTimePasswordForm')->name('show-one-time-password-form');
+            Route::post('login/{id}', 'attemptOneTimePassword')->name('attempt-one-time-password');
         });
 
         Route::middleware(['auth:web'])->group(function () {
@@ -23,10 +22,17 @@ Route::domain(parse_url(config('app.url'))['host'])->name('storefront.')->group(
     });
 
     Route::middleware(['auth:web'])->group(function () {
-        Route::redirect('/', '/products')->name('home');
+        Route::middleware(['onboarded:false'])->controller(OnboardingController::class)->name('onboarding.')->group(function () {
+            Route::get('onboarding', 'showOnboardingForm')->name('show-onboarding-form');
+            Route::post('onboarding', 'store')->name('store');
+        });
 
-        Route::controller(ProductsController::class)->prefix('/products')->name('products.')->group(function () {
-            Route::get('/', 'index')->name('index');
+        Route::middleware(['onboarded:true'])->group(function () {
+            Route::redirect('/', '/products')->name('home');
+
+            Route::controller(ProductsController::class)->prefix('/products')->name('products.')->group(function () {
+                Route::get('/', 'index')->name('index');
+            });
         });
     });
 });

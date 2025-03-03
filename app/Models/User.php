@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -14,38 +13,24 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
+    protected $casts = [
+        'onboarded_at' => 'timestamp',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    public function setEmailAttribute(string $value): void
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        $this->attributes['email'] = strtolower($value);
+    }
+
+    public function getOnboardedAttribute(): bool
+    {
+        return $this->onboarded_at !== null;
     }
 
     public function orders(): HasMany
@@ -56,5 +41,10 @@ class User extends Authenticatable
     public function stockMovements(): MorphMany
     {
         return $this->morphMany(StockMovement::class, 'actor');
+    }
+
+    public function oneTimePasswords(): HasMany
+    {
+        return $this->hasMany(OneTimePassword::class);
     }
 }

@@ -15,7 +15,7 @@ export default function AuthLogin() {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('storefront.auth.send-login-link'));
+        post(route('storefront.auth.send-one-time-password'));
     };
 
     return (

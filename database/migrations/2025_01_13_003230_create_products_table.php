@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+
             $table->string('sku')->unique()->nullable();
             $table->string('name');
             $table->text('description')->nullable();
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->unsignedInteger('reserved_stock')->default(0);
             $table->integer('max_per_order')->nullable();
             $table->string('image_url')->nullable();
+
             $table->timestamps();
         });
     }
