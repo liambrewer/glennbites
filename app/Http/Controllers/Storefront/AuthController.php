@@ -75,7 +75,7 @@ class AuthController extends Controller
 
             auth()->guard('web')->login($otp->user);
 
-            return redirect()->intended(route('storefront.home'));
+            return to_route('storefront.home');
         } catch (OneTimePasswordAttemptException $e) {
             throw ValidationException::withMessages(['code' => $e->getMessage()]);
         }

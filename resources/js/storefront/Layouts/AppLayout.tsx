@@ -15,8 +15,6 @@ export default function AppLayout({ children }: PropsWithChildren) {
 
     return (
         <>
-            We must add rate limiting for the login link email!!!!!!
-
             Hey, {auth.user.name}!
 
             <form onSubmit={submitLogout}>

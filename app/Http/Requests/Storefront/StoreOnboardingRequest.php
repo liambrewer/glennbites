@@ -22,8 +22,8 @@ class StoreOnboardingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['required', 'string', 'max:64'],
-            'last_name' => ['required', 'string', 'max:64'],
+            'first_name' => ['required', 'string', 'min:2', 'max:64'],
+            'last_name' => ['required', 'string', 'min:2', 'max:64'],
         ];
     }
 }

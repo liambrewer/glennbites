@@ -26,4 +26,11 @@ class AttemptOneTimePasswordRequest extends FormRequest
             'sid' => ['required', 'string'],
         ];
     }
+
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'code' => str_replace('-', '', $this->code),
+        ]);
+    }
 }

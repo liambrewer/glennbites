@@ -8,7 +8,7 @@ export default {
         './vendor/masmerise/livewire-toaster/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/**/*.blade.php',
-        './resources/**/*.js',
+        './resources/**/*.tsx',
         './resources/**/*.vue',
     ],
     safelist: [
@@ -21,7 +21,6 @@ export default {
         extend: {
             fontFamily: {
                 onest: ['Onest Variable', ...defaultTheme.fontFamily.sans],
-                'ibm-plex-sans': ['IBM Plex Sans', ...defaultTheme.fontFamily.sans],
             },
         },
     },
