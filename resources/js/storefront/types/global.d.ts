@@ -1,7 +1,7 @@
 import { PageProps as InertiaPageProps } from '@inertiajs/core';
 import { AxiosInstance } from 'axios';
-import Pusher from "pusher-js";
-import Echo from "laravel-echo";
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
 import { route as ziggyRoute } from 'ziggy-js';
 import { PageProps as AppPageProps } from './index';
 

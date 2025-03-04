@@ -1,16 +1,16 @@
-import type { FormEventHandler } from "react";
+import type { FormEventHandler } from 'react';
 
-import { useForm } from "laravel-precognition-react-inertia";
+import { useForm } from 'laravel-precognition-react-inertia';
 
+import { ArrowPathIcon, EnvelopeIcon } from '@heroicons/react/24/solid';
+import { Head } from '@inertiajs/react';
+import Button from '@storefront/Components/UI/Button';
+import TextInput from '@storefront/Components/UI/TextInput';
 import AuthLayout from '@storefront/Layouts/AuthLayout';
-import TextInput from "@storefront/Components/UI/TextInput";
-import Button from "@storefront/Components/UI/Button";
-import {ArrowPathIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
-import {Head} from "@inertiajs/react";
 
 type LoginForm = {
     email: string;
-}
+};
 
 export default function AuthLogin() {
     const form = useForm<LoginForm>('post', route('storefront.auth.send-one-time-password'), {
@@ -40,7 +40,13 @@ export default function AuthLogin() {
                         error={form.errors.email}
                     />
 
-                    <Button className="w-full" variant="primary" type="submit" disabled={form.processing} leftIcon={form.processing ? <ArrowPathIcon className="animate-spin" /> : <EnvelopeIcon />}>
+                    <Button
+                        className="w-full"
+                        variant="primary"
+                        type="submit"
+                        disabled={form.processing}
+                        leftIcon={form.processing ? <ArrowPathIcon className="animate-spin" /> : <EnvelopeIcon />}
+                    >
                         {form.processing ? 'Sending Code...' : 'Send Code'}
                     </Button>
                 </form>

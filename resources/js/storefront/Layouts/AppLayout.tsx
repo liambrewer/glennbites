@@ -1,9 +1,11 @@
 import type { FormEventHandler, PropsWithChildren } from 'react';
 
-import {useForm, usePage} from "@inertiajs/react";
+import { useForm, usePage } from '@inertiajs/react';
 
 export default function AppLayout({ children }: PropsWithChildren) {
-    const { props: { auth } } = usePage();
+    const {
+        props: { auth },
+    } = usePage();
 
     const { post } = useForm();
 
@@ -11,16 +13,14 @@ export default function AppLayout({ children }: PropsWithChildren) {
         e.preventDefault();
 
         post(route('storefront.auth.logout'));
-    }
+    };
 
     return (
         <>
             Hey, {auth.user.name}!
-
             <form onSubmit={submitLogout}>
                 <button type="submit">Logout</button>
             </form>
-
             {children}
         </>
     );

@@ -1,19 +1,19 @@
-import '../shared/bootstrap'
 import '../../../vendor/masmerise/livewire-toaster/resources/js/index.js';
+import '../shared/bootstrap';
 
-import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 
-dayjs.extend(utc)
-dayjs.extend(timezone)
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
-import { Livewire, Alpine } from '../../../vendor/livewire/livewire/dist/livewire.esm.js';
+import { Alpine, Livewire } from '../../../vendor/livewire/livewire/dist/livewire.esm.js';
 
 Alpine.data('duration', (startedAt) => ({
     timer: null,
-    startedAt: dayjs.tz(startedAt, "America/Chicago"),
-    timeElapsed: "",
+    startedAt: dayjs.tz(startedAt, 'America/Chicago'),
+    timeElapsed: '',
 
     init() {
         this.syncTime();
@@ -24,7 +24,7 @@ Alpine.data('duration', (startedAt) => ({
     },
 
     syncTime() {
-        this.timeElapsed = formatTime(dayjs().tz("America/Chicago").diff(this.startedAt, 'seconds'));
+        this.timeElapsed = formatTime(dayjs().tz('America/Chicago').diff(this.startedAt, 'seconds'));
     },
 
     destroy() {
@@ -45,7 +45,7 @@ Alpine.data('orderPrinter', (orderId) => ({
         this.printing = true;
 
         iframe.onload = () => {
-            if (iframe.contentDocument.title.indexOf("404") >= 0) throw new Error('Failed to find order.');
+            if (iframe.contentDocument.title.indexOf('404') >= 0) throw new Error('Failed to find order.');
 
             const iframeWindow = iframe.contentWindow;
 
@@ -61,12 +61,16 @@ Alpine.data('orderPrinter', (orderId) => ({
         };
 
         document.body.appendChild(iframe);
-    }
+    },
 }));
 
 function formatTime(seconds) {
-    const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
-    const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+    const h = Math.floor(seconds / 3600)
+        .toString()
+        .padStart(2, '0');
+    const m = Math.floor((seconds % 3600) / 60)
+        .toString()
+        .padStart(2, '0');
     const s = (seconds % 60).toString().padStart(2, '0');
     return `${h}:${m}:${s}`;
 }

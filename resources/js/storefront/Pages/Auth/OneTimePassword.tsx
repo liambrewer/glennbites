@@ -1,13 +1,13 @@
-import type { FormEventHandler } from "react";
+import type { FormEventHandler } from 'react';
 
-import { useForm } from "laravel-precognition-react-inertia";
+import { useForm } from 'laravel-precognition-react-inertia';
 
+import { ArrowPathIcon, CheckIcon } from '@heroicons/react/24/solid';
+import { Head } from '@inertiajs/react';
+import { useMask } from '@react-input/mask';
+import Button from '@storefront/Components/UI/Button';
+import TextInput from '@storefront/Components/UI/TextInput';
 import AuthLayout from '@storefront/Layouts/AuthLayout';
-import TextInput from "@storefront/Components/UI/TextInput";
-import Button from "@storefront/Components/UI/Button";
-import {useMask} from "@react-input/mask";
-import {ArrowPathIcon, CheckIcon} from "@heroicons/react/24/solid";
-import {Head} from "@inertiajs/react";
 
 type OneTimePasswordForm = {
     code: string;
@@ -52,7 +52,13 @@ export default function AuthOneTimePassword({ email, url }: Props) {
                         error={form.errors.code}
                     />
 
-                    <Button className="w-full" variant="primary" type="submit" disabled={form.processing} leftIcon={form.processing ? <ArrowPathIcon className="animate-spin" /> : <CheckIcon />}>
+                    <Button
+                        className="w-full"
+                        variant="primary"
+                        type="submit"
+                        disabled={form.processing}
+                        leftIcon={form.processing ? <ArrowPathIcon className="animate-spin" /> : <CheckIcon />}
+                    >
                         {form.processing ? 'Verifying Code...' : 'Verify Code'}
                     </Button>
                 </form>

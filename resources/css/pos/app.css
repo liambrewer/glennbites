@@ -1,17 +1,19 @@
-@import "../../../node_modules/@fontsource-variable/onest";
+@import '../../../node_modules/@fontsource-variable/onest';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-[x-cloak] { display: none !important; }
+[x-cloak] {
+    display: none !important;
+}
 
 @layer components {
     /*
         Text Input Styles
      */
     .text-input {
-        @apply px-3 py-2.5 text-sm border rounded focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 duration-150 read-only:text-gray-400 read-only:bg-gray-100
+        @apply rounded border px-3 py-2.5 text-sm duration-150 read-only:bg-gray-100 read-only:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200;
     }
 
     .text-input-error {
@@ -26,6 +28,6 @@
     }
 
     .label-required {
-        @apply after:content-['*'] after:-ms-0.5 after:text-red-500;
+        @apply after:-ms-0.5 after:text-red-500 after:content-['*'];
     }
 }

@@ -1,14 +1,14 @@
-import type { PageProps } from "@storefront/types";
+import type { PageProps } from '@storefront/types';
 
-import type { FormEventHandler } from "react";
+import type { FormEventHandler } from 'react';
 
-import { useForm } from "laravel-precognition-react-inertia";
+import { useForm } from 'laravel-precognition-react-inertia';
 
+import { ArrowPathIcon, CheckIcon } from '@heroicons/react/24/solid';
+import { Head } from '@inertiajs/react';
+import Button from '@storefront/Components/UI/Button';
+import TextInput from '@storefront/Components/UI/TextInput';
 import AuthLayout from '@storefront/Layouts/AuthLayout';
-import TextInput from "@storefront/Components/UI/TextInput";
-import Button from "@storefront/Components/UI/Button";
-import {ArrowPathIcon, CheckIcon} from "@heroicons/react/24/solid";
-import {Head} from "@inertiajs/react";
 
 type OnboardingForm = {
     first_name: string;
@@ -34,12 +34,7 @@ export default function Onboarding({ auth }: PageProps) {
             <AuthLayout title="Finish Account Setup" description="Please provide your first and last name to finish setting up your account.">
                 <form className="space-y-8" onSubmit={handleSubmit}>
                     <div className="space-y-4">
-                        <TextInput
-                            label="Email"
-                            type="email"
-                            value={auth.user.email}
-                            disabled
-                        />
+                        <TextInput label="Email" type="email" value={auth.user.email} disabled />
 
                         <TextInput
                             label="First Name"
@@ -64,7 +59,13 @@ export default function Onboarding({ auth }: PageProps) {
                         />
                     </div>
 
-                    <Button className="w-full" variant="primary" type="submit" disabled={form.processing} leftIcon={form.processing ? <ArrowPathIcon className="animate-spin" /> : <CheckIcon />}>
+                    <Button
+                        className="w-full"
+                        variant="primary"
+                        type="submit"
+                        disabled={form.processing}
+                        leftIcon={form.processing ? <ArrowPathIcon className="animate-spin" /> : <CheckIcon />}
+                    >
                         {form.processing ? 'Finishing Setup...' : 'Finish Setup'}
                     </Button>
                 </form>
