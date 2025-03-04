@@ -22,7 +22,7 @@ class AttemptOneTimePasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', 'string'],
+            'code' => ['required', 'string', 'digits:6'],
             'sid' => ['required', 'string'],
         ];
     }

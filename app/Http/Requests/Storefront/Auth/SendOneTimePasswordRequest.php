@@ -28,11 +28,4 @@ class SendOneTimePasswordRequest extends FormRequest
             'email' => ['required', 'email', 'max:255', new NoEmailPlusAddress(), new LeanderIsdDomain()],
         ];
     }
-
-    public function messages(): array
-    {
-        return [
-            'email.regex' => 'You must use your school email address.',
-        ];
-    }
 }

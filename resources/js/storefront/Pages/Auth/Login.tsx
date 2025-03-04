@@ -1,32 +1,44 @@
 import type { FormEventHandler } from "react";
 
-import { useForm } from "@inertiajs/react";
+import { useForm } from "laravel-precognition-react-inertia";
 
 import AuthLayout from '@storefront/Layouts/AuthLayout';
 import TextInput from "@storefront/Components/UI/TextInput";
 import Button from "@storefront/Components/UI/Button";
-import {EnvelopeIcon} from "@heroicons/react/24/solid";
+import {ArrowPathIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
 
 type LoginForm = {
     email: string;
 }
 
 export default function AuthLogin() {
-    const { data, setData, post, processing, errors, reset } = useForm<LoginForm>({
+    const form = useForm<LoginForm>('post', route('storefront.auth.send-one-time-password'), {
         email: '',
     });
 
-    const submit: FormEventHandler = (e) => {
+    const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('storefront.auth.send-one-time-password'));
+
+        form.submit();
     };
 
     return (
         <AuthLayout title="Login to Glennbites" description="Enter your email to receive a one-time password">
-            <form className="space-y-8" onSubmit={submit}>
-                <TextInput label="Email" type="email" placeholder="first.last00@k12.leanderisd.org" required value={data.email} onChange={(e) => setData('email', e.target.value)} error={errors.email} />
+            <form className="space-y-8" onSubmit={handleSubmit}>
+                <TextInput
+                    label="Email"
+                    type="email"
+                    placeholder="first.last00@k12.leanderisd.org"
+                    required
+                    value={form.data.email}
+                    onChange={(e) => form.setData('email', e.target.value)}
+                    onBlur={() => form.validate('email')}
+                    error={form.errors.email}
+                />
 
-                <Button className="w-full" variant="primary" type="submit" disabled={processing} leftIcon={<EnvelopeIcon />}>Send Code</Button>
+                <Button className="w-full" variant="primary" type="submit" disabled={form.processing} leftIcon={form.processing ? <ArrowPathIcon className="animate-spin" /> : <EnvelopeIcon />}>
+                    {form.processing ? 'Sending Code...' : 'Send Code'}
+                </Button>
             </form>
         </AuthLayout>
     );

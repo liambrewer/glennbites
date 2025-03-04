@@ -1,12 +1,12 @@
 import type { FormEventHandler } from "react";
 
-import { useForm } from "@inertiajs/react";
+import { useForm } from "laravel-precognition-react-inertia";
 
 import AuthLayout from '@storefront/Layouts/AuthLayout';
 import TextInput from "@storefront/Components/UI/TextInput";
 import Button from "@storefront/Components/UI/Button";
 import {useMask} from "@react-input/mask";
-import {CheckIcon} from "@heroicons/react/24/solid";
+import {ArrowPathIcon, CheckIcon} from "@heroicons/react/24/solid";
 
 type OneTimePasswordForm = {
     code: string;
@@ -18,7 +18,7 @@ type Props = {
 };
 
 export default function AuthOneTimePassword({ email, url }: Props) {
-    const { data, setData, post, processing, errors, reset } = useForm<OneTimePasswordForm>({
+    const form = useForm<OneTimePasswordForm>('post', url, {
         code: '',
     });
 
@@ -27,17 +27,30 @@ export default function AuthOneTimePassword({ email, url }: Props) {
         replacement: { _: /\d/ },
     });
 
-    const submit: FormEventHandler = (e) => {
+    const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(url);
+
+        form.submit();
     };
 
     return (
         <AuthLayout title="One Time Password" description={`Enter the one-time password sent to ${email}`}>
-            <form className="space-y-8" onSubmit={submit}>
-                <TextInput inputRef={codeInputRef} label="OTP Code" type="text" placeholder="123-456" required value={data.code} onChange={(e) => setData('code', e.target.value)} error={errors.code} />
+            <form className="space-y-8" onSubmit={handleSubmit}>
+                <TextInput
+                    inputRef={codeInputRef}
+                    label="Code"
+                    type="text"
+                    placeholder="123-456"
+                    required
+                    value={form.data.code}
+                    onChange={(e) => form.setData('code', e.target.value)}
+                    onBlur={() => form.validate('code')}
+                    error={form.errors.code}
+                />
 
-                <Button className="w-full" variant="primary" type="submit" disabled={processing} leftIcon={<CheckIcon />}>Verify</Button>
+                <Button className="w-full" variant="primary" type="submit" disabled={form.processing} leftIcon={form.processing ? <ArrowPathIcon className="animate-spin" /> : <CheckIcon />}>
+                    {form.processing ? 'Verifying Code...' : 'Verify Code'}
+                </Button>
             </form>
         </AuthLayout>
     );

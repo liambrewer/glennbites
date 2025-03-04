@@ -14,7 +14,7 @@ class LeanderIsdDomain implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        list($_, $domain) = explode('@', $value);
+        list($_, $domain) = explode('@', $value) + [null, null];
 
         if ($domain !== 'leanderisd.org' && $domain !== 'k12.leanderisd.org') {
             $fail('You must use your school email address.');
