@@ -86,7 +86,7 @@ class CreateOneTimePassword
             $otp = $user->oneTimePasswords()->create([
                 'code' => $code,
                 'status' => OneTimePasswordStatus::ACTIVE,
-                'ip_address' => Request::ip(),
+                'ip_address' => Request::getClientIp(),
             ]);
 
             return [$otp, $code];
