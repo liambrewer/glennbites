@@ -1,11 +1,12 @@
-import decaLogo from '../assets/deca.png';
+import decaLogo from '@storefront/assets/deca.png';
+import cn from "@storefront/Utils/cn";
 
-export default function Logo() {
+type LogoProps = {
+    className?: string;
+}
+
+export default function Logo({ className }: LogoProps) {
     return (
-        <div className='logo'>
-            <div className="logo-icon">
-                <img className='deca' width={35} src={decaLogo} alt='deca logo'/>
-            </div>
-        </div>
+        <img src={decaLogo} alt="Deca Logo" className={cn("size-12", className)} />
     )
 }

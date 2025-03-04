@@ -8,6 +8,7 @@ import AuthLayout from '@storefront/Layouts/AuthLayout';
 import TextInput from "@storefront/Components/UI/TextInput";
 import Button from "@storefront/Components/UI/Button";
 import {ArrowPathIcon, CheckIcon} from "@heroicons/react/24/solid";
+import {Head} from "@inertiajs/react";
 
 type OnboardingForm = {
     first_name: string;
@@ -27,43 +28,47 @@ export default function Onboarding({ auth }: PageProps) {
     };
 
     return (
-        <AuthLayout title="Finish Account Setup" description="Please provide your first and last name to finish setting up your account.">
-            <form className="space-y-8" onSubmit={handleSubmit}>
-                <div className="space-y-4">
-                    <TextInput
-                        label="Email"
-                        type="email"
-                        value={auth.user.email}
-                        disabled
-                    />
+        <>
+            <Head title="Finish Account Setup" />
 
-                    <TextInput
-                        label="First Name"
-                        type="text"
-                        placeholder="First Name"
-                        required
-                        value={form.data.first_name}
-                        onChange={(e) => form.setData('first_name', e.target.value)}
-                        onBlur={() => form.validate('first_name')}
-                        error={form.errors.first_name}
-                    />
+            <AuthLayout title="Finish Account Setup" description="Please provide your first and last name to finish setting up your account.">
+                <form className="space-y-8" onSubmit={handleSubmit}>
+                    <div className="space-y-4">
+                        <TextInput
+                            label="Email"
+                            type="email"
+                            value={auth.user.email}
+                            disabled
+                        />
 
-                    <TextInput
-                        label="Last Name"
-                        type="text"
-                        placeholder="Last Name"
-                        required
-                        value={form.data.last_name}
-                        onChange={(e) => form.setData('last_name', e.target.value)}
-                        onBlur={() => form.validate('last_name')}
-                        error={form.errors.last_name}
-                    />
-                </div>
+                        <TextInput
+                            label="First Name"
+                            type="text"
+                            placeholder="First Name"
+                            required
+                            value={form.data.first_name}
+                            onChange={(e) => form.setData('first_name', e.target.value)}
+                            onBlur={() => form.validate('first_name')}
+                            error={form.errors.first_name}
+                        />
 
-                <Button className="w-full" variant="primary" type="submit" disabled={form.processing} leftIcon={form.processing ? <ArrowPathIcon className="animate-spin" /> : <CheckIcon />}>
-                    {form.processing ? 'Finishing Setup...' : 'Finish Setup'}
-                </Button>
-            </form>
-        </AuthLayout>
+                        <TextInput
+                            label="Last Name"
+                            type="text"
+                            placeholder="Last Name"
+                            required
+                            value={form.data.last_name}
+                            onChange={(e) => form.setData('last_name', e.target.value)}
+                            onBlur={() => form.validate('last_name')}
+                            error={form.errors.last_name}
+                        />
+                    </div>
+
+                    <Button className="w-full" variant="primary" type="submit" disabled={form.processing} leftIcon={form.processing ? <ArrowPathIcon className="animate-spin" /> : <CheckIcon />}>
+                        {form.processing ? 'Finishing Setup...' : 'Finish Setup'}
+                    </Button>
+                </form>
+            </AuthLayout>
+        </>
     );
 }

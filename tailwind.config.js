@@ -22,6 +22,9 @@ export default {
             fontFamily: {
                 onest: ['Onest Variable', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                deca: "#00539a",
+            }
         },
     },
     plugins: [],
