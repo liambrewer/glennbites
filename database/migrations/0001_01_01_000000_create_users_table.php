@@ -16,8 +16,9 @@ return new class extends Migration
 
             $table->string('name')->nullable();
             $table->string('email')->unique();
-
             $table->timestamp('onboarded_at')->nullable();
+
+            $table->rememberToken();
 
             $table->timestamps();
         });

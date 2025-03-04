@@ -73,7 +73,7 @@ class AuthController extends Controller
         try {
             $otp = (new AttemptOneTimePassword)->handle($id, $validated['sid'], $validated['code']);
 
-            auth()->guard('web')->login($otp->user);
+            auth()->guard('web')->login(user: $otp->user, remember: true);
 
             return to_route('storefront.home');
         } catch (OneTimePasswordAttemptException $e) {
@@ -86,7 +86,6 @@ class AuthController extends Controller
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect()->route('storefront.auth.show-login-form');

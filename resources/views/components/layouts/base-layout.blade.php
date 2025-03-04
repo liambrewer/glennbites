@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>glennbites</title>
+    <title>Glennbites POS</title>
 
     @include('partials.head')
 </head>

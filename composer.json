@@ -22,7 +22,6 @@
         "livewire/livewire": "^3.5",
         "livewire/volt": "^1.6",
         "masmerise/livewire-toaster": "^2.6",
-        "monicahq/laravel-cloudflare": "^3.7",
         "resend/resend-laravel": "^0.16.0",
         "spatie/laravel-pdf": "^1.5",
         "tightenco/ziggy": "^2.5",

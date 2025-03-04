@@ -23,6 +23,10 @@ class User extends Authenticatable
         'onboarded_at' => 'timestamp',
     ];
 
+    protected $hidden = [
+        'remember_token',
+    ];
+
     public function setEmailAttribute(string $value): void
     {
         $this->attributes['email'] = strtolower($value);
