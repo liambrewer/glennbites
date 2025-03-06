@@ -8,8 +8,8 @@ use App\Enums\OneTimePasswordStatus;
 use App\Exceptions\OneTimePasswordAttemptException;
 use App\Exceptions\OneTimePasswordThrottleException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Storefront\Auth\AttemptOneTimePasswordRequest;
-use App\Http\Requests\Storefront\Auth\SendOneTimePasswordRequest;
+use App\Http\Requests\Storefront\Auth\AttemptOtpRequest;
+use App\Http\Requests\Storefront\Auth\SendOtpRequest;
 use App\Models\OneTimePassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +26,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function sendOneTimePassword(SendOneTimePasswordRequest $request)
+    public function sendOneTimePassword(SendOtpRequest $request)
     {
         $validated = $request->validated();
 
@@ -66,7 +66,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function attemptOneTimePassword(AttemptOneTimePasswordRequest $request, string $id)
+    public function attemptOneTimePassword(AttemptOtpRequest $request, string $id)
     {
         $validated = $request->validated();
 

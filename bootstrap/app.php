@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Middleware\EnsureUserOnboarded;
-use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,10 +14,6 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->web(append: [
-            HandleInertiaRequests::class,
-        ]);
-
         $middleware->trustProxies(at: '*', headers: Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO | Request::HEADER_X_FORWARDED_AWS_ELB);
 
         $middleware->alias([
@@ -30,7 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 if ($request->routeIs('pos.*')) {
                     return route('pos.auth.show-login-form');
                 } else {
-                    return route('storefront.auth.show-login-form');
+                    return route('storefront.auth.login');
                 }
             },
             users: function (Request $request) {

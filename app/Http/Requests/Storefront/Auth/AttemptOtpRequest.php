@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Storefront;
+namespace App\Http\Requests\Storefront\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreOnboardingRequest extends FormRequest
+class AttemptOtpRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth('web')->check();
+        return true;
     }
 
     /**
@@ -22,8 +22,15 @@ class StoreOnboardingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['required', 'string', 'min:2', 'max:64'],
-            'last_name' => ['required', 'string', 'min:2', 'max:64'],
+            'code' => ['required', 'string', 'digits:6'],
+            'sid' => ['required', 'string'],
         ];
+    }
+
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'code' => str_replace('-', '', $this->code),
+        ]);
     }
 }

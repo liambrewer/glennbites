@@ -27,7 +27,7 @@
 
     @vite(['resources/js/storefront/app.js', 'resources/css/storefront/app.css'])
 </head>
-<body class="font-onest antialiased bg-slate-100">
+<body class="font-onest antialiased">
 <div class="bg-gray-100">
     <div class="h-full min-h-lvh">
         <header x-data="{ open: false }" class="bg-white border-b sticky top-0 z-10">

@@ -13,7 +13,6 @@
         "blade-ui-kit/blade-heroicons": "^2.5",
         "chillerlan/php-qrcode": "^5.0",
         "gehrisandro/tailwind-merge-laravel": "^1.2",
-        "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^11.0",
         "laravel/octane": "^2.8",
         "laravel/reverb": "^1.0",

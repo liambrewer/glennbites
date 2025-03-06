@@ -1,5 +1,5 @@
 @props(['required' => false])
 
-<label {{ $attributes->merge(['class' => $required ? 'label label-required' : 'label']) }}>
+<label {{ $attributes->twMerge('text-sm font-semibold', $required ? 'after:-ms-0.5 after:text-red-500 after:content-[\'*\']' : '') }}>
     {{ $slot }}
 </label>

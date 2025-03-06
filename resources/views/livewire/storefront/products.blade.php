@@ -75,10 +75,12 @@ new #[Title('Products')] #[Layout('components.layouts.storefront-layout')] class
 
                 <x-ui.button.primary wire:click="addToCart({{ $product->id }})" wire:loading.attr="disabled"
                                      wire:target="addToCart({{ $product->id }})" class="grow">
-                    <x-ui.button.icon wire:loading.remove wire:target="addToCart({{ $product->id }})"
-                                      icon="heroicon-s-plus" />
-                    <x-ui.button.icon wire:loading wire:target="addToCart({{ $product->id }})"
-                                      icon="heroicon-s-arrow-path" class="animate-spin" />
+                    <x-slot:left>
+                        <x-ui.button.icon wire:loading.remove wire:target="addToCart({{ $product->id }})"
+                                          icon="heroicon-s-plus" />
+                        <x-ui.button.icon wire:loading wire:target="addToCart({{ $product->id }})"
+                                          icon="heroicon-s-arrow-path" class="animate-spin" />
+                    </x-slot:left>
 
                     <span wire:loading.remove wire:target="addToCart({{ $product->id }})">Add to Cart</span>
                     <span wire:loading wire:target="addToCart({{ $product->id }})">Adding to Cart...</span>

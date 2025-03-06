@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Storefront;
+namespace App\Http\Controllers\Storefront\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Storefront\StoreOnboardingRequest;
-use Inertia\Inertia;
+use App\Http\Requests\Storefront\Auth\StoreOnboardingRequest;
 
-class OnboardingController extends Controller
+class OnboardingController
 {
-    public function showOnboardingForm()
+    public function create()
     {
-        return Inertia::render('onboarding');
+        return view('storefront.auth.onboarding');
     }
 
     public function store(StoreOnboardingRequest $request)

@@ -4,14 +4,14 @@ namespace App\Http\Requests\Storefront\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AttemptOneTimePasswordRequest extends FormRequest
+class StoreOnboardingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return auth('web')->check();
     }
 
     /**
@@ -22,15 +22,8 @@ class AttemptOneTimePasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', 'string', 'digits:6'],
-            'sid' => ['required', 'string'],
+            'first_name' => ['required', 'string', 'min:2', 'max:64'],
+            'last_name' => ['required', 'string', 'min:2', 'max:64'],
         ];
-    }
-
-    public function prepareForValidation(): void
-    {
-        $this->merge([
-            'code' => str_replace('-', '', $this->code),
-        ]);
     }
 }

@@ -5,6 +5,9 @@ import.meta.glob([
 import '../../../vendor/masmerise/livewire-toaster/resources/js/index.js';
 import '../shared/bootstrap';
 
-import { Livewire } from '../../../vendor/livewire/livewire/dist/livewire.esm.js';
+import { Livewire, Alpine } from '../../../vendor/livewire/livewire/dist/livewire.esm.js';
+import mask from '@alpinejs/mask';
+
+Alpine.plugin(mask);
 
 Livewire.start();
