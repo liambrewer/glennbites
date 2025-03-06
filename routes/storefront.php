@@ -13,21 +13,21 @@ Route::domain(parse_url(config('app.url'))['host'])->name('storefront.')->group(
         Route::middleware(['guest:web'])->group(function () {
             Route::redirect('login', 'login/otp')->name('login');
 
-            Route::controller(SendOtpController::class)->prefix('login/otp')->name('send-otp')->group(function () {
-                Route::get('/', 'create');
-                Route::post('/', 'store');
+            Route::controller(SendOtpController::class)->prefix('login/otp')->name('send-otp.')->group(function () {
+                Route::get('/', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
             });
 
-            Route::controller(AttemptOtpController::class)->prefix('login/otp/{otp}/verify')->name('verify-otp')->group(function () {
-                Route::get('/', 'create');
-                Route::post('/', 'store');
+            Route::controller(AttemptOtpController::class)->prefix('login/otp/{otp}/verify')->name('verify-otp.')->group(function () {
+                Route::get('/', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
             });
         });
 
         Route::middleware(['auth:web'])->group(function () {
-            Route::middleware(['onboarded:false'])->controller(OnboardingController::class)->prefix('onboarding')->name('onboarding')->group(function () {
-                Route::get('/', 'create');
-                Route::post('/', 'store');
+            Route::middleware(['onboarded:false'])->controller(OnboardingController::class)->prefix('onboarding')->name('onboarding.')->group(function () {
+                Route::get('/', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
             });
 
             Route::post('logout', LogoutController::class)->name('logout');

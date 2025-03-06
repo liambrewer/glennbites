@@ -22,7 +22,7 @@ class OneTimePassword extends Model
 
     public function getUrlAttribute(): string
     {
-        return URL::temporarySignedRoute('storefront.auth.verify-otp', now()->addMinutes(5), [
+        return URL::temporarySignedRoute('storefront.auth.verify-otp.create', now()->addMinutes(5), [
             'otp' => $this,
             'sid' => Request::session()->getId(),
         ]);

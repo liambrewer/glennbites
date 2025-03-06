@@ -18,14 +18,14 @@ class AttemptOtpController
         $sid = $request->session()->getId();
 
         if (! $request->hasValidSignature()) {
-            return redirect()->route('storefront.auth.send-otp')->with('status', OneTimePasswordStatus::SIGNATURE->errorMessage());
+            return redirect()->route('storefront.auth.send-otp.create')->with('status', OneTimePasswordStatus::SIGNATURE->errorMessage());
         }
 
         if ($request['sid'] !== $sid) {
-            return redirect()->route('storefront.auth.send-otp')->with('status', OneTimePasswordStatus::SESSION->errorMessage());
+            return redirect()->route('storefront.auth.send-otp.create')->with('status', OneTimePasswordStatus::SESSION->errorMessage());
         }
 
-        $url = URL::temporarySignedRoute('storefront.auth.verify-otp', now()->addMinutes(5), [
+        $url = URL::temporarySignedRoute('storefront.auth.verify-otp.store', now()->addMinutes(5), [
             'otp' => $otp,
             'sid' => $sid,
         ]);

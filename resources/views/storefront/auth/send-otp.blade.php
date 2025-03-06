@@ -6,7 +6,7 @@
         Welcome back! Please enter your email to receive a one-time password.
     </x-slot:description>
 
-    <form method="post" action="{{ route('storefront.auth.send-otp') }}" class="space-y-8">
+    <form method="post" action="{{ route('storefront.auth.send-otp.store') }}" class="space-y-8">
         @csrf
 
         <x-ui.input.text

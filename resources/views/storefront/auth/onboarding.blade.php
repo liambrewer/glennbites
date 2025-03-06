@@ -6,7 +6,7 @@
         Welcome to Glennbites! Please enter your information to get started.
     </x-slot:description>
 
-    <form method="post" action="{{ route('storefront.auth.onboarding') }}" class="space-y-8">
+    <form method="post" action="{{ route('storefront.auth.onboarding.store') }}" class="space-y-8">
         @csrf
 
         <div class="space-y-4">

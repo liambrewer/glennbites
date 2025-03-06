@@ -20,7 +20,7 @@ class EnsureUserOnboarded
         $user = auth('web')->user();
 
         if ($shouldBeOnboarded && ! $user->onboarded) {
-            return to_route('storefront.auth.onboarding');
+            return to_route('storefront.auth.onboarding.create');
         } elseif (! $shouldBeOnboarded && $user->onboarded) {
             return to_route('storefront.home');
         }
