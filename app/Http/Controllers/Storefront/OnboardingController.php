@@ -10,7 +10,7 @@ class OnboardingController extends Controller
 {
     public function showOnboardingForm()
     {
-        return Inertia::render('Onboarding');
+        return Inertia::render('onboarding');
     }
 
     public function store(StoreOnboardingRequest $request)

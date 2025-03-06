@@ -36,7 +36,7 @@
         <div class="flex items-center justify-between px-2.5 py-3">
             <div class="text-gray-600 font-semibold">Total</div>
 
-            <x-pos.cash-and-card-totals :total="$order->total" />
+            <x-cash-and-card-totals :total="$order->total" />
         </div>
 
         @isset ($actions)

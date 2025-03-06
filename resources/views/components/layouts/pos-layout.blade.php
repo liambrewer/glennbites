@@ -42,6 +42,8 @@ $navLinks = [
     <title>Glennbites POS</title>
 
     @include('partials.head')
+
+    @vite(['resources/js/pos/app.js', 'resources/css/pos/app.css'])
 </head>
 <body class="font-onest antialiased bg-slate-100">
 <aside class="fixed inset-y-0 left-0 flex flex-col gap-5 w-64 p-5 border-r bg-slate-50">

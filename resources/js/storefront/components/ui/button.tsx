@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes, PropsWithChildren, ReactNode } from 'react';
 
-import cn from '@storefront/Utils/cn';
+import cn from '@storefront/utils/cn';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'primary' | 'success' | 'danger';

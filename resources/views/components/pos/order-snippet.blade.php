@@ -28,7 +28,7 @@
             <li class="flex items-center justify-between">
                 <div class="text-gray-800 font-semibold text-lg">Total</div>
 
-                <x-pos.cash-and-card-totals :total="$order->total" />
+                <x-cash-and-card-totals :total="$order->total" />
             </li>
     </ul>
 </div>

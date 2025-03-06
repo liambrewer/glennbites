@@ -13,6 +13,6 @@ class ProductsController extends Controller
     {
         $products = ProductResource::collection(Product::all());
 
-        return Inertia::render('Products/Index', compact('products'));
+        return Inertia::render('products', compact('products'));
     }
 }

@@ -6,22 +6,16 @@ use App\Exceptions\OrderNotFoundException;
 use App\Exceptions\OrderReservationException;
 use App\Models\Order;
 use App\Services\OrderService;
+use App\Traits\Livewire\HasOrderService;
 use Illuminate\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Masmerise\Toaster\Toastable;
 
 class ReserveOrderModal extends ModalComponent
 {
-    use Toastable;
-
-    private OrderService $orderService;
+    use HasOrderService, Toastable;
 
     public Order $order;
-
-    public function boot(OrderService $orderService): void
-    {
-        $this->orderService = $orderService;
-    }
 
     public function reserve(): void
     {

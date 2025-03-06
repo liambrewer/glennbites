@@ -8,6 +8,7 @@ export default defineConfig({
         laravel({
             input: [
                 // Storefront assets
+                'resources/js/storefront/app.js',
                 'resources/js/storefront/app.tsx',
                 'resources/css/storefront/app.css',
 

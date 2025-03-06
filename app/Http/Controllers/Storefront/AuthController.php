@@ -21,7 +21,7 @@ class AuthController extends Controller
 {
     public function showLoginForm(Request $request)
     {
-        return Inertia::render('Auth/Login', [
+        return Inertia::render('auth/login', [
             'status' => $request->session()->get('status'),
         ]);
     }
@@ -60,7 +60,7 @@ class AuthController extends Controller
             'sid' => $sid,
         ]);
 
-        return Inertia::render('Auth/OneTimePassword', [
+        return Inertia::render('auth/one-time-password', [
             'email' => $otp->user->email,
             'url' => $url,
         ]);

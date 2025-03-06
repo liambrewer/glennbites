@@ -1,13 +1,13 @@
 import type { FormEventHandler } from 'react';
 
-import { useForm } from 'laravel-precognition-react-inertia';
-
-import { ArrowPathIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { Head } from '@inertiajs/react';
+import { useForm } from 'laravel-precognition-react-inertia';
+import { ArrowPathIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { useMask } from '@react-input/mask';
-import Button from '@storefront/Components/UI/Button';
-import TextInput from '@storefront/Components/UI/TextInput';
-import AuthLayout from '@storefront/Layouts/AuthLayout';
+
+import Button from '@storefront/components/ui/button';
+import TextInput from '@storefront/components/ui/text-input';
+import AuthLayout from '@storefront/layouts/auth-layout';
 
 type OneTimePasswordForm = {
     code: string;

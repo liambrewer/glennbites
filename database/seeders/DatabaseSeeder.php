@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
             'price' => 0.50,
             'stock_on_hand' => 100,
             'max_per_order' => 5,
-            'image_url' => 'https://cdn.glennbites.com/product_images/cookie.jpg',
+            'image_url' => '/assets/images/cookie.jpg',
         ]);
 
         Product::factory()->create([
@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
             'price' => 2.50,
             'stock_on_hand' => 50,
             'max_per_order' => 2,
-            'image_url' => 'https://cdn.glennbites.com/product_images/monster.png',
+            'image_url' => '/assets/images/monster.png',
         ]);
 
         $this->orderService->createOrder($user, [

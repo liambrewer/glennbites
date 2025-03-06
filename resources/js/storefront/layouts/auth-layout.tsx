@@ -1,5 +1,6 @@
-import Logo from '@storefront/Components/Logo';
 import type { PropsWithChildren } from 'react';
+
+import Logo from '@storefront/components/logo';
 
 interface AuthLayoutProps extends PropsWithChildren {
     title?: string;

@@ -1,6 +1,6 @@
 import type { InputHTMLAttributes, PropsWithChildren, Ref } from 'react';
 
-import cn from '@storefront/Utils/cn';
+import cn from '@storefront/utils/cn';
 
 interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;

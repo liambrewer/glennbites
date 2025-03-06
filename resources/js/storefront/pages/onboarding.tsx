@@ -1,14 +1,13 @@
+import type { FormEventHandler } from 'react';
 import type { PageProps } from '@storefront/types';
 
-import type { FormEventHandler } from 'react';
-
-import { useForm } from 'laravel-precognition-react-inertia';
-
-import { ArrowPathIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { Head } from '@inertiajs/react';
-import Button from '@storefront/Components/UI/Button';
-import TextInput from '@storefront/Components/UI/TextInput';
-import AuthLayout from '@storefront/Layouts/AuthLayout';
+import { useForm } from 'laravel-precognition-react-inertia';
+import { ArrowPathIcon, CheckIcon } from '@heroicons/react/24/solid';
+
+import Button from '@storefront/components/ui/button';
+import TextInput from '@storefront/components/ui/text-input';
+import AuthLayout from '@storefront/layouts/auth-layout';
 
 type OnboardingForm = {
     first_name: string;

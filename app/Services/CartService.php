@@ -4,118 +4,52 @@ namespace App\Services;
 
 use App\Exceptions\ProductNotFoundException;
 use App\Http\Resources\ProductResource;
+use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Support\Facades\Session;
 
 class CartService
 {
-    const CART_SESSION_KEY = 'cart';
-
-    public function getCart(): array
+    public function getCart(): Cart
     {
-        return Session::get(self::CART_SESSION_KEY, []);
+        return Cart::firstOrCreate(['user_id' => auth('web')->user()->id]);
     }
 
-    public function saveCart(array $cart): void
-    {
-        Session::put(self::CART_SESSION_KEY, $cart);
-    }
-
-    public function clearCart(): void
-    {
-        Session::forget(self::CART_SESSION_KEY);
-    }
-
-    /**
-     * Adds an item to the cart.
-     *
-     * @throws ProductNotFoundException
-     */
     public function addToCart(int $productId, int $quantity): void
     {
-        $product = Product::find($productId);
-        if (! $product) {
-            throw new ProductNotFoundException;
-        }
-
         $cart = $this->getCart();
 
-        $existingItemKey = array_search($productId, array_column($cart, 'product_id'));
-
-        // TODO: WE NEED SAFER VALUES LIKE REMOVEFROMCART
-        if ($existingItemKey !== false) {
-            $cart[$existingItemKey]['quantity'] += $quantity;
-        } else {
-            $cart[] = [
-                'product_id' => $productId,
-                'quantity' => $quantity,
-            ];
-        }
-
-        $this->saveCart($cart);
+        $item = $cart->items()->firstOrNew(['product_id' => $productId]);
+        $item->quantity += $quantity;
+        $item->save();
     }
 
     public function removeFromCart(int $productId, int $quantity): void
     {
         $cart = $this->getCart();
 
-        $existingItemKey = array_search($productId, array_column($cart, 'product_id'));
+        $item = $cart->items()->where('product_id', $productId)->first();
 
-        if ($existingItemKey !== false) {
-            // we need a safe-ish quantity!!!
-            $cart[$existingItemKey]['quantity'] = max(1, $cart[$existingItemKey]['quantity'] - $quantity);
+        if ($item) {
+            $item->quantity = max(1, $item->quantity - $quantity);
+            $item->save();
         }
-
-        $this->saveCart($cart);
     }
 
     public function deleteFromCart(int $productId): void
     {
         $cart = $this->getCart();
 
-        $newCart = array_filter($cart, fn ($item) => $item['product_id'] != $productId);
+        $item = $cart->items()->where('product_id', $productId)->first();
 
-        $this->saveCart($newCart);
+        if ($item) {
+            $item->delete();
+        }
     }
 
-    // TODO: This is a janko way of doing things.
-    public function buildForFrontend(): array
+    public function clearCart(): void
     {
         $cart = $this->getCart();
-
-        // It feels very wrong to pass these to the array_map callback...
-        $total = 0;
-        $valid = true;
-
-        /*
-         * TODO: There is probably a waaaaaaaay better way to do this.... use(&total, &valid)
-         */
-        $cartItems = array_map(function ($item) use (&$total, &$valid) {
-            $product = Product::find($item['product_id']);
-            $quantity = $item['quantity'];
-
-            $cartItem = [
-                'product' => ProductResource::make($product),
-                'quantity' => $quantity,
-                'price' => $product->price * $quantity,
-            ];
-
-            $total += $cartItem['price'];
-
-            try {
-                $product->ensureValidQuantity($quantity);
-            } catch (\Exception $e) {
-                $valid = false;
-                $cartItem['error'] = $e->getMessage();
-            }
-
-            return $cartItem;
-        }, $cart);
-
-        return [
-            'items' => $cartItems,
-            'total' => $total,
-            'valid' => $valid,
-        ];
+        $cart->items()->delete();
     }
 }

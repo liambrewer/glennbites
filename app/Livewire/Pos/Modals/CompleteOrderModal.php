@@ -6,22 +6,16 @@ use App\Exceptions\OrderCompletionException;
 use App\Exceptions\OrderNotFoundException;
 use App\Models\Order;
 use App\Services\OrderService;
+use App\Traits\Livewire\HasOrderService;
 use Illuminate\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Masmerise\Toaster\Toastable;
 
 class CompleteOrderModal extends ModalComponent
 {
-    use Toastable;
-
-    private OrderService $orderService;
+    use HasOrderService, Toastable;
 
     public Order $order;
-
-    public function boot(OrderService $orderService): void
-    {
-        $this->orderService = $orderService;
-    }
 
     public function complete(): void
     {

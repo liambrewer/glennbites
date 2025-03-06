@@ -41,7 +41,7 @@
 
                 <div class="text-xl font-bold truncate w-full leading-none">{{ $order->user->name }}</div>
 
-                <x-pos.cash-and-card-totals :total="$order->total" />
+                <x-cash-and-card-totals :total="$order->total" />
             </div>
 
             <img src="{{ $qrcode }}" alt="QR Code" class="size-16 shrink-0" />

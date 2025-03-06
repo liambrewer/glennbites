@@ -6,8 +6,12 @@ use App\Exceptions\ExceedsMaxPerOrderException;
 use App\Exceptions\InvalidQuantityException;
 use App\Exceptions\NotEnoughStockException;
 use App\Exceptions\OutOfStockException;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Product extends Model
 {
@@ -31,7 +35,7 @@ class Product extends Model
 
     public function getOutOfStockAttribute(): int
     {
-        return $this->available_stock === 0;
+        return $this->available_stock <= 0;
     }
 
     /**
@@ -56,5 +60,34 @@ class Product extends Model
         if ($quantity > $this->available_stock) {
             throw new NotEnoughStockException("Not enough stock for {$this->name}. Only {$this->available_stock} left.");
         }
+    }
+
+    public function getFavoriteAttribute(): bool
+    {
+        return $this->favoredBy()->where('user_id', auth('web')->id())->exists();
+    }
+
+    public function toggleFavorite(): void
+    {
+        if ($this->favorite) {
+            $this->favoredBy()->detach(auth('web')->id());
+        } else {
+            $this->favoredBy()->attach(auth('web')->id());
+        }
+    }
+
+    public function favoredBy(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, Favorite::class);
+    }
+
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function cartItems(): HasMany
+    {
+        return $this->hasMany(CartItem::class);
     }
 }

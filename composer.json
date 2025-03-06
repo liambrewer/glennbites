@@ -20,7 +20,7 @@
         "laravel/tinker": "^2.9",
         "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/livewire": "^3.5",
-        "livewire/volt": "^1.6",
+        "livewire/volt": "^1.7",
         "masmerise/livewire-toaster": "^2.6",
         "resend/resend-laravel": "^0.16.0",
         "spatie/laravel-pdf": "^1.5",

@@ -1,5 +1,5 @@
 import decaLogo from '@storefront/assets/deca.png';
-import cn from '@storefront/Utils/cn';
+import cn from '@storefront/utils/cn';
 
 type LogoProps = {
     className?: string;

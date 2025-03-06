@@ -47,7 +47,7 @@ return [
 
         'page_paths' => [
 
-            resource_path('js/storefront/Pages'),
+            resource_path('js/storefront/pages'),
 
         ],
 

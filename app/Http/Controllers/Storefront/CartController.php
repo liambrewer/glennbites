@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Storefront;
 
+use App\Exceptions\ProductNotFoundException;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CartAddRequest;
 use App\Http\Requests\CartDeleteRequest;
 use App\Http\Requests\CartRemoveRequest;
@@ -14,16 +16,22 @@ class CartController extends Controller
 
     public function index()
     {
-        return Inertia::render('Cart/Index');
+        $cartDetails = $this->cartService->buildForFrontend();
+
+        return Inertia::render('cart', $cartDetails);
     }
 
     public function add(CartAddRequest $request)
     {
         $validated = $request->validated();
 
-        $this->cartService->addToCart($validated['product_id'], $validated['quantity']);
+        try {
+            $this->cartService->addToCart($validated['product_id'], $validated['quantity']);
 
-        return back();
+            return back();
+        } catch (ProductNotFoundException $e) {
+            return back()->with('message', 'Product not found.');
+        }
     }
 
     public function remove(CartRemoveRequest $request)
