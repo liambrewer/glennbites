@@ -22,11 +22,6 @@ class extends Component {
             <li>
                 <a wire:navigate href="{{ route('storefront.orders.show', $order) }}">
                     Order #{{ $order->id }}
-
-                    @can ('view', $order)
-                        <span class="text-sm text-gray-500">- {{ $order->status }}</span>
-                        you can view
-                    @endcan
                 </a>
             </li>
         @endforeach

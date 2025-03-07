@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Contracts\Authorizable;
 use App\Models\Employee;
 use App\Models\Order;
 use App\Models\User;
@@ -16,43 +17,43 @@ class OrderPolicy
         //
     }
 
-    public function view(User|Employee $actor, Order $order): bool
+    public function view(Authorizable $authorizable, Order $order): bool
     {
-        return $actor instanceof Employee || $order->user()->is($actor);
+        return $authorizable->isEmployee() || $order->user->id === $authorizable->getId();
     }
 
-    public function viewAny(User|Employee $actor): bool
+    public function viewAny(Authorizable $authorizable): bool
     {
-        return $actor instanceof Employee;
+        return $authorizable->isEmployee();
     }
 
-    public function create(User|Employee $actor): bool
+    public function create(Authorizable $authorizable): bool
     {
-        return $actor instanceof User;
+        return $authorizable->isEmployee();
     }
 
-    public function update(User|Employee $actor): bool
+    public function update(Authorizable $authorizable): bool
     {
-        return $actor instanceof Employee;
+        return $authorizable->isEmployee();
     }
 
-    public function reserve(User|Employee $actor): bool
+    public function reserve(Authorizable $authorizable): bool
     {
-        return $actor instanceof Employee;
+        return $authorizable->isEmployee();
     }
 
-    public function short(User|Employee $actor): bool
+    public function short(Authorizable $authorizable): bool
     {
-        return $actor instanceof Employee;
+        return $authorizable->isEmployee();
     }
 
-    public function cancel(User|Employee $actor, Order $order): bool
+    public function cancel(Authorizable $authorizable, Order $order): bool
     {
-        return $actor instanceof Employee || $order->user()->is($actor);
+        return $authorizable->isEmployee() || $order->user->id === $authorizable->getId();
     }
 
-    public function complete(User|Employee $actor): bool
+    public function complete(Authorizable $authorizable): bool
     {
-        return $actor instanceof Employee;
+        return $authorizable->isEmployee();
     }
 }

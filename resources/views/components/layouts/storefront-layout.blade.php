@@ -1,4 +1,4 @@
-@props(['header'])
+@props(['header', 'back'])
 
 @php
     use App\Helpers\NavLink;
@@ -119,9 +119,22 @@
         </header>
 
         <main class="container mx-auto p-4">
-            @isset ($header)
-                <h1 class="text-xl font-bold mb-4 text-center md:text-left">{{ $header }}</h1>
-            @endisset
+            @if (isset($back) || isset($header))
+                <div class="flex gap-2 flex-col md:flex-row md:items-center mb-4">
+                    @isset ($back)
+                        <x-ui.button wire:navigate href="{{ $back }}" class="md:w-fit">
+                            <x-slot:left>
+                                <x-ui.button.icon icon="heroicon-s-arrow-left" />
+                            </x-slot:left>
+
+                            Back
+                        </x-ui.button>
+                    @endisset
+                    @isset ($header)
+                        <h1 class="text-xl font-bold text-center md:text-left">{{ $header }}</h1>
+                    @endisset
+                </div>
+            @endif
 
             {{ $slot }}
         </main>

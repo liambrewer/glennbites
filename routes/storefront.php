@@ -4,6 +4,7 @@ use App\Http\Controllers\Storefront\Auth\AttemptOtpController;
 use App\Http\Controllers\Storefront\Auth\LogoutController;
 use App\Http\Controllers\Storefront\Auth\SendOtpController;
 use App\Http\Controllers\Storefront\Auth\OnboardingController;
+use App\Models\Order;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -49,7 +50,7 @@ Route::domain(parse_url(config('app.url'))['host'])->name('storefront.')->group(
             Volt::route('account', 'storefront.account')->name('account');
 
             Volt::route('orders', 'storefront.orders.index')->name('orders.index');
-            Volt::route('orders/{order}', 'storefront.orders.show')->name('orders.show')->can('view', 'order');
+            Volt::route('orders/{order}', 'storefront.orders.show')->name('orders.show');
 
 //            Route::controller(CartController::class)->prefix('cart')->name('cart.')->group(function () {
 //                Route::get('/', 'index')->name('index');
