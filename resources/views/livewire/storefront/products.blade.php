@@ -31,6 +31,12 @@ class extends Component {
         $product = Product::findOrFail($productId);
 
         $product->toggleFavorite();
+
+        if ($product->favorite) {
+            $this->success('Product added to favorites.');
+        } else {
+            $this->success('Product removed from favorites.');
+        }
     }
 
     #[Computed]

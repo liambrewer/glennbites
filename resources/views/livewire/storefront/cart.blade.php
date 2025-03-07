@@ -73,22 +73,22 @@ class extends Component {
                             <div
                                 class="flex items-center bg-gray-100 text-gray-800 rounded-full h-8 w-fit gap-5 px-2">
                                 @if ($item->quantity === 1)
-                                    <button wire:click="delete({{ $item->product->id }})" wire:loading.attr="disabled" wire:target="delete({{ $item->product->id }})" class="flex items-center justify-center size-8 p-2">
-                                        <x-heroicon-c-trash wire:loading.remove wire:target="delete({{ $item->product->id }})" />
-                                        <x-heroicon-c-arrow-path wire:loading wire:target="delete({{ $item->product->id }})" class="animate-spin" />
+                                    <button wire:click="delete({{ $item->product->id }})" wire:loading.attr="disabled" wire:target="delete({{ $item->product->id }})" class="flex items-center justify-center size-8">
+                                        <x-heroicon-c-trash wire:loading.remove wire:target="delete({{ $item->product->id }})" class="size-4" />
+                                        <x-heroicon-c-arrow-path wire:loading wire:target="delete({{ $item->product->id }})" class="size-4 animate-spin" />
                                     </button>
                                 @else
-                                    <button wire:click="decrement({{ $item->product->id }})" wire:loading.attr="disabled" wire:target="decrement({{ $item->product->id }})" class="flex items-center justify-center size-8 p-2">
-                                        <x-heroicon-c-minus wire:loading.remove wire:target="decrement({{ $item->product->id }})" />
-                                        <x-heroicon-c-arrow-path wire:loading wire:target="decrement({{ $item->product->id }})" class="animate-spin" />
+                                    <button wire:click="decrement({{ $item->product->id }})" wire:loading.attr="disabled" wire:target="decrement({{ $item->product->id }})" class="flex items-center justify-center size-8">
+                                        <x-heroicon-c-minus wire:loading.remove wire:target="decrement({{ $item->product->id }})" class="size-4" />
+                                        <x-heroicon-c-arrow-path wire:loading wire:target="decrement({{ $item->product->id }})" class="size-4 animate-spin" />
                                     </button>
                                 @endif
 
                                 <span class="font-medium">{{ $item->quantity }}</span>
 
-                                <button wire:click="increment({{ $item->product->id }})" wire:loading.attr="disabled" wire:target="increment({{ $item->product->id }})" class="flex items-center justify-center size-8 p-2">
-                                    <x-heroicon-c-plus wire:loading.remove wire:target="increment({{ $item->product->id }})" />
-                                    <x-heroicon-c-arrow-path wire:loading wire:target="increment({{ $item->product->id }})" class="animate-spin" />
+                                <button wire:click="increment({{ $item->product->id }})" wire:loading.attr="disabled" wire:target="increment({{ $item->product->id }})" class="flex items-center justify-center size-8">
+                                    <x-heroicon-c-plus wire:loading.remove wire:target="increment({{ $item->product->id }})" class="size-4" />
+                                    <x-heroicon-c-arrow-path wire:loading wire:target="increment({{ $item->product->id }})" class="size-4 animate-spin" />
                                 </button>
                             </div>
 
