@@ -23,11 +23,13 @@ class ConfirmPlaceOrderModal extends ModalComponent
     public function placeOrder(): void
     {
         try {
-            $this->orderService->createOrder(auth('web')->user(), $this->cart->transformToOrderItems());
+            $order = $this->orderService->createOrder(auth('web')->user(), $this->cart->transformToOrderItems());
 
             $this->cartService->clearCart();
 
             $this->success('Order placed.');
+
+            $this->redirect(route('storefront.orders.show', $order));
         } catch (\Exception $e) {
             $this->error('Failed to place order: '.$e->getMessage());
         } finally {

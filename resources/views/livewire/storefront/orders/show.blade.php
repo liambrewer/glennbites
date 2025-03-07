@@ -20,4 +20,8 @@ new class extends Component {
 
 <div>
     {{ $order->id }}
+    {{ $order->total }}
+    {{ $order->created_at }}
+    {{ $order->status }}
+    {{ $order->items }}
 </div>
