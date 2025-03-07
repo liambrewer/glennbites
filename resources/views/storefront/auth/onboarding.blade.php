@@ -6,18 +6,20 @@
         Welcome to Glennbites! Please enter your information to get started.
     </x-slot:description>
 
+    <div class="text-center">
+        <div class="text-sm text-gray-600">Logged in as:</div>
+        <div class="text-gray-800 font-semibold">{{ auth('web')->user()->email }}</div>
+        <form method="post" action="{{ route('storefront.auth.logout') }}">
+            @csrf
+
+            <div class="text-sm text-gray-600">Not you? <button type="submit" class="text-blue-500 hover:underline">Logout</button></div>
+        </form>
+    </div>
+
     <form method="post" action="{{ route('storefront.auth.onboarding.store') }}" class="space-y-8">
         @csrf
 
         <div class="space-y-4">
-            <x-ui.input.text
-                value="{{ auth('web')->user()->email }}"
-                name="email"
-                type="email"
-                label="Email"
-                readonly
-            />
-
             <x-ui.input.text
                 name="first_name"
                 type="text"

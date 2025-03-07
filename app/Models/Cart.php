@@ -39,6 +39,11 @@ class Cart extends Model
         return $this->items->isEmpty();
     }
 
+    public function getQuantityAttribute(): int
+    {
+        return $this->items->sum('quantity');
+    }
+
     public function transformToOrderItems(): array
     {
         return $this->items->map(fn (CartItem $item) => [

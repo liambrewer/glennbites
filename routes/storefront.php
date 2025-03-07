@@ -46,6 +46,11 @@ Route::domain(parse_url(config('app.url'))['host'])->name('storefront.')->group(
 
             Volt::route('cart', 'storefront.cart')->name('cart');
 
+            Volt::route('account', 'storefront.account')->name('account');
+
+            Volt::route('orders', 'storefront.orders.index')->name('orders.index');
+            Volt::route('orders/{order}', 'storefront.orders.show')->name('orders.show')->can('view', 'order');
+
 //            Route::controller(CartController::class)->prefix('cart')->name('cart.')->group(function () {
 //                Route::get('/', 'index')->name('index');
 //

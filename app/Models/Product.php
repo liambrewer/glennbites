@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
@@ -89,5 +90,23 @@ class Product extends Model
     public function cartItems(): HasMany
     {
         return $this->hasMany(CartItem::class);
+    }
+
+    public function scopeWithFavoritesSorted(Builder $query): Builder
+    {
+        $userId = auth('web')->id();
+
+        return $query
+            ->leftJoin('favorites', function ($join) use ($userId) {
+                $join->on('products.id', '=', 'favorites.product_id')
+                    ->where('favorites.user_id', $userId);
+            })
+            ->select('products.*', DB::raw('CASE WHEN favorites.user_id IS NULL THEN 1 ELSE 0 END AS is_not_favorite'))
+            ->orderBy('is_not_favorite', 'asc');
+    }
+
+    public function scopeSearch(Builder $query, string $search): Builder
+    {
+        return $query->where('name', 'like', "%{$search}%");
     }
 }
